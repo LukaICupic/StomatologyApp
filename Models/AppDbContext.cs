@@ -74,24 +74,21 @@ namespace StomatologyApp.Models
                 new Customer
                 {
                     CustomerId = 1,
-                    FirstName = "Luka",
-                    LastName = "Marinković",
+                    Name = "Luka",
                     Address = "Miramarska 22",
                     TelephoneNumber = "0993132245"
                 },
                  new Customer
                  {
                      CustomerId = 2,
-                     FirstName = "Ana",
-                     LastName = "Anić",
+                     Name = "Ana",
                      Address = "Miramarska 23",
                      TelephoneNumber = "0993132246"
                  },
                   new Customer
                   {
                       CustomerId = 3,
-                      FirstName = "Vilihrast",
-                      LastName = "Kćerčić",
+                      Name = "Vilihrast",
                       Address = "Miramarska 24",
                       TelephoneNumber = "0993131245"
                   });

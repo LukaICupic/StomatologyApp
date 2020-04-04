@@ -1,0 +1,37 @@
+﻿@model Customer
+@{
+    ViewBag.Title = "Customer details";
+}
+
+    <div class="card m-3">
+        <div class="card-header">
+            <h3>@Model.Name</h3>
+        </div>
+
+        @if (Model.Address == null)
+        {
+            <div class="card-body">
+                <ul>
+                    <li>The address was not specified.</li>
+                    <li>@Model.TelephoneNumber</li>
+
+                </ul>
+            </div>
+        }
+
+        else
+        {
+            <div class="card-body">
+                <ul>
+                    <li>@Model.Address</li>
+                    <li>@Model.TelephoneNumber</li>
+
+                </ul>
+            </div>
+        }
+
+        <div class="card-footer">
+            <a asp-action="GetCustomers" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+

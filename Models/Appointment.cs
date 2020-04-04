@@ -13,6 +13,7 @@ namespace StomatologyApp.Models
         public DateTime AppointmentStart { get; set; }
         public DateTime AppointmentEnd   { get; set; }
         public bool AppointmentCanceled { get; set; }
+        public string AppointmentProcedureDescription { get; set; } // možda će trebati nešto veće od stringa
 
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }

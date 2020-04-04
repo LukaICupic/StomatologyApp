@@ -1,14 +1,13 @@
-﻿@model CustomerEditVM
+﻿@model CustomerCreateVM
+
 @{ 
-    ViewBag.Title = "Customer edit";
+    ViewBag.Title = "Create customer";
 }
 
-<h3>Edit customer</h3>
+<h3>Create customer</h3>
 <br />
-<form method="post" asp-action="EditCustomer">
 
-    <input type="hidden" asp-for="CustomerId" />
-
+<form method="post" asp-action="CreateCustomer">
 
     <div class="form-group-row">
         <label asp-for="Name">First and last name</label>
@@ -23,7 +22,7 @@
         <label asp-for="Address"></label>
         <div>
             <input asp-for="Address" placeholder="Address" class="col-sm-2 col-form-label" />
-            <span asp-validation-for="Address"></span>
+            <span asp-validation-for="Address" class="text-danger"></span>
         </div>
     </div>
     <br />
@@ -32,12 +31,15 @@
         <label asp-for="TelephoneNumber"></label>
         <div>
             <input asp-for="TelephoneNumber" placeholder="Telephone number" class="col-sm-2 col-form-label" />
-            <span asp-validation-for="TelephoneNumber"></span>
+            <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
         </div>
     </div>
     <br />
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button asp-action="CreateCustomer" type="submit"
+            class="btn btn-primary">
+        Add customer
+    </button>
+    <a asp-action="GetCustomers" class="btn btn-secondary">Cancel</a>
 
-    <button asp-action="GetCustomers" class="btn btn-secondary">Cancel</button>
 </form>

@@ -24,6 +24,13 @@ namespace StomatologyApp.Controllers
             return View(customers);
         }
 
+        [HttpGet] 
+        public IActionResult GetCustomer(int Id)
+        {
+            var customer = customerRepository.GetCustomer(Id);
+            return View(customer);
+        }
+
         [HttpGet]
         public ViewResult EditCustomer (int? Id)
         {
@@ -38,8 +45,7 @@ namespace StomatologyApp.Controllers
             CustomerEditVM _customer = new CustomerEditVM()
             {
                 CustomerId = customer.CustomerId,
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
+                Name = customer.Name,
                 Address = customer.Address,
                 TelephoneNumber = customer.TelephoneNumber
             };
@@ -61,10 +67,31 @@ namespace StomatologyApp.Controllers
                     return View("NotFound");
                 }
 
-                customer.FirstName = model.FirstName;
-                customer.LastName = model.LastName;
-                customer.Address = model.Address;
+                //else if (customer.Address == null)
+                //{
+                //    customer.Name = model.Name;
+                //    customer.TelephoneNumber = model.TelephoneNumber;
+                //    customer.Address = "The address was not specified";
+                //}
+
+
+                //else if (customer.Address == "The address was not specified")
+                //{
+                //    customer.Name = model.Name;
+                //    customer.TelephoneNumber = model.TelephoneNumber;
+                //    customer.Address = model.Address;
+                //}
+
+                //else
+                //{
+                //    customer.Name = model.Name;
+                //    customer.TelephoneNumber = model.TelephoneNumber;
+                //    customer.Address = model.Address;
+                //}
+
+                customer.Name = model.Name;
                 customer.TelephoneNumber = model.TelephoneNumber;
+                customer.Address = model.Address;
 
                 customerRepository.UpdateCustomer(customer);
                 return RedirectToAction("GetCustomers");
@@ -73,6 +100,41 @@ namespace StomatologyApp.Controllers
 
             return View(model);
            
+        }
+
+        [HttpGet]
+        public ViewResult CreateCustomer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateCustomer (CustomerCreateVM customer)
+        {
+            if (ModelState.IsValid)
+            {
+               
+                //if (customer.Address == null)
+                //{
+                //    customer.Name = customer.Name;
+                //    customer.Address = "The address was not specified";
+                //    customer.TelephoneNumber = customer.TelephoneNumber;
+                //};
+
+                Customer _customer = new Customer
+                {
+                    Name = customer.Name,
+                    Address = customer.Address,
+                    TelephoneNumber = customer.TelephoneNumber,
+                }; 
+                //idealno bi bilo kad se kod ne bi ponavljao
+                //provjeriti (async?)
+
+                customerRepository.AddCustomer(_customer);
+                return RedirectToAction("GetCustomers");
+            }
+
+            return View(customer); 
         }
 
     }
