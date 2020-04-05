@@ -67,28 +67,6 @@ namespace StomatologyApp.Controllers
                     return View("NotFound");
                 }
 
-                //else if (customer.Address == null)
-                //{
-                //    customer.Name = model.Name;
-                //    customer.TelephoneNumber = model.TelephoneNumber;
-                //    customer.Address = "The address was not specified";
-                //}
-
-
-                //else if (customer.Address == "The address was not specified")
-                //{
-                //    customer.Name = model.Name;
-                //    customer.TelephoneNumber = model.TelephoneNumber;
-                //    customer.Address = model.Address;
-                //}
-
-                //else
-                //{
-                //    customer.Name = model.Name;
-                //    customer.TelephoneNumber = model.TelephoneNumber;
-                //    customer.Address = model.Address;
-                //}
-
                 customer.Name = model.Name;
                 customer.TelephoneNumber = model.TelephoneNumber;
                 customer.Address = model.Address;
@@ -135,6 +113,21 @@ namespace StomatologyApp.Controllers
             }
 
             return View(customer); 
+        }
+
+
+        [HttpPost]
+        public  IActionResult DeleteCustomer(int Id)
+        {
+            var _customer = customerRepository.GetCustomer(Id);
+
+            if(_customer != null) 
+            {
+                var customer = customerRepository.DeleteCustomer(Id);
+                return RedirectToAction("GetCustomers");
+            }
+
+            return View("NotFound");
         }
 
     }

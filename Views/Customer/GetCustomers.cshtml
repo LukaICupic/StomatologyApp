@@ -6,40 +6,43 @@
 
 <br />
 
+
+<div class="container">
     <div>
-        <a asp-action="CreateCustomer" class="btn btn-primary">Create new customer</a>
+        <a asp-action="CreateCustomer" class="btn btn-primary ">Create new customer</a>
     </div>
 
-@if (Model.Any())
-{
-    foreach (var customer in Model)
+    @if (Model.Any())
     {
+        foreach (var customer in Model)
+        {
 
+            <form method="post" asp-action="DeleteCustomer" asp-route-id="@customer.CustomerId">
+                <div class="card m-3">
+                    <div class="card-header">
+                        <h3>@customer.Name</h3>
+                    </div>
 
-        <div class="card m-3">
-            <div class="card-header">
-                <h3>@customer.Name</h3>
-            </div>
-
-            <div class="card-footer">
-                <a asp-action="GetCustomer" asp-route-id="@customer.CustomerId" class ="btn btn-primary">
-                    Details
-                </a>
-                <a asp-action="EditCustomer" 
-                   asp-route-id="@customer.CustomerId" class="btn btn-primary">
-                    Edit
-                </a>
-                <a asp-action="#" class="btn btn-secondary">
-                    Delete
-                </a>
-            </div>
-        </div>
+                    <div class="card-footer">
+                        <a asp-action="GetCustomer" asp-route-id="@customer.CustomerId" class="btn btn-primary">
+                            Details
+                        </a>
+                        <a asp-action="EditCustomer"
+                           asp-route-id="@customer.CustomerId" class="btn btn-primary">
+                            Edit
+                        </a>
+                        <button class="btn btn-secondary" onclick="return confirm('@customer.Name will be deleted from the system. Do you want to continute?')">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </form>
+        }
     }
-}
 
-else
-{
-    <h3>There are no customers in the system.</h3>
-}
-
+    else
+    {
+        <h3>There are no customers in the system.</h3>
+    }
+</div>
 
