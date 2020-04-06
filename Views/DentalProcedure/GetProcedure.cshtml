@@ -1,0 +1,23 @@
+﻿@model DentalProcedure
+
+
+<div class="card m-3">
+    <div class="card-header">
+        <h3>@Model.ProcedureName</h3>
+    </div>
+
+  
+        <div class="card-body">
+            <ul>
+                <li>@Model.ProcedurePrice</li>
+
+            </ul>
+        </div>
+
+
+    <div class="card-footer">
+        <a asp-action="GetProcedures" class="btn btn-primary">Back</a>
+    </div>
+</div>
+
+

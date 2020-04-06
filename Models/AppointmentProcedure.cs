@@ -12,5 +12,7 @@ namespace StomatologyApp.Models
 
         public int DentalProcedureId { get; set; }
         public DentalProcedure DentalProcedure { get; set; }
+
+        public bool ProcedureAppointmentCanceled { get; set; }
     }
 }

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DentalProcedure>
+
+@{
+    ViewBag.Title = "Dental procedures";
+}
+
+<h3>Dental procedures</h3>
+<br />
+
+<div class="container">
+
+    <a asp-action="CreateProcedure" class="btn btn-primary">New procedure</a>
+
+    <br />
+    <br />
+    @if (Model.Any())
+    {
+        @foreach (var procedure in Model)
+        {
+            <form method="post" asp-action="DeleteProcedure" asp-route-id="@procedure.DentalProcedureId">
+                <div class="card m-3">
+                    <div class="card-header">
+                        <h2>@procedure.ProcedureName</h2>
+                    </div>
+
+                    <div class="card-body">
+                        <ul>
+                            <li>@procedure.ProcedurePrice</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="card-footer">
+                        <a asp-action="GetProcedure" asp-route-id="@procedure.DentalProcedureId" class="btn btn-primary">
+                            Details
+                        </a>
+
+                        <a asp-action="EditProcedure" asp-route-id="@procedure.DentalProcedureId" class="btn btn-primary">
+                            Edit
+                        </a>
+
+                        <button class="btn btn-primary" onclick="return confirm('Are you sure you want to delete this procedure permanently?')">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </form>
+        }
+    }
+
+
+    else
+    {
+        <h4>There are no dental procedures in the system.</h4>
+    }
+
+</div>
+

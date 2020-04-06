@@ -17,8 +17,6 @@ namespace StomatologyApp.Models
         public string Address { get; set; }
         [Required]
         public string TelephoneNumber { get; set; }
-        //public bool CameToAppointment { get; set; }
-
 
         public List<Appointment> Appointments { get; set; }
         public List<CustomerProcedure> CustomerProcedures { get; set; }

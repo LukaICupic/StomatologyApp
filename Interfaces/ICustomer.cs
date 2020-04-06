@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp
 {
-    public interface ICustomerRepository
+    public interface ICustomer
     {
         Customer GetCustomer(int Id);
 

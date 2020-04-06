@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp.Interfaces
 {
-    public class SQLCustomerRepository : ICustomerRepository
+    public class SQLCustomerRepository : ICustomer
     {
         private readonly AppDbContext context;
 

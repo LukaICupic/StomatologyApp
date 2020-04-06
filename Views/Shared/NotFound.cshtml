@@ -1,9 +1,24 @@
-﻿@{ 
+﻿@{
     ViewBag.Title = "NotFound";
 }
 
-<h2>
-    ViewBag.ErrorMessage
-</h2>
+@if (ViewBag.ErrorMessage == null)
+{
+    <h2>
+        Unfortunately, we could not find what you were looking for
+    </h2>
 
-<a > #Home page </a>
+    <br />
+    <h6><a asp-action="Index" asp-controller="Home">return home</a></h6>
+}
+else
+{
+    <h2>
+        ViewBag.ErrorMessage
+    </h2>
+
+    <br />
+    <h6><a asp-action="Index" asp-controller="Home">return home</a></h6>
+}
+
+

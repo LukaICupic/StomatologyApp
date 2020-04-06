@@ -10,9 +10,9 @@ namespace StomatologyApp.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ICustomerRepository customerRepository;
+        private readonly ICustomer customerRepository;
 
-        public CustomerController(ICustomerRepository customerRepository)
+        public CustomerController(ICustomer customerRepository)
         {
             this.customerRepository = customerRepository;
         }
@@ -63,7 +63,7 @@ namespace StomatologyApp.Controllers
 
                 if (customer == null)
                 {
-                    ViewBag.ErrorMessage = "The user does not exist.";
+                    ViewBag.ErrorMessage = "The customer does not exist.";
                     return View("NotFound");
                 }
 
@@ -121,13 +121,16 @@ namespace StomatologyApp.Controllers
         {
             var _customer = customerRepository.GetCustomer(Id);
 
-            if(_customer != null) 
+            if(_customer == null) 
             {
-                var customer = customerRepository.DeleteCustomer(Id);
-                return RedirectToAction("GetCustomers");
+                ViewBag.ErrorMessage = "The customer does not exist.";
+                return View("NotFound");
             }
 
-            return View("NotFound");
+            var customer = customerRepository.DeleteCustomer(Id);
+            return RedirectToAction("GetCustomers");
+
+            
         }
 
     }

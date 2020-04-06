@@ -69,6 +69,8 @@ namespace StomatologyApp.Models
                 .WithMany(cp => cp.AppointmentProcedures)
                 .HasForeignKey(dp => dp.DentalProcedureId);
 
+            
+
             modelBuilder.Entity<Customer>()
                 .HasData(
                 new Customer
