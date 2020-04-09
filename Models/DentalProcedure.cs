@@ -10,9 +10,9 @@ namespace StomatologyApp.Models
     {
         [Key]
         public int DentalProcedureId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The name of the procedure must be specified")]
         public string ProcedureName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The price of the procedure must be specified")]
         public decimal ProcedurePrice { get; set; }
 
         public List<CustomerProcedure> CustomerProcedures { get; set; }

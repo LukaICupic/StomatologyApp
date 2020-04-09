@@ -11,11 +11,11 @@ namespace StomatologyApp.Models
 
         [Key]
         public int CustomerId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Name is a required field")]
         public string Name { get; set; }
  
         public string Address { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Telephone number is a required field")]
         public string TelephoneNumber { get; set; }
 
         public List<Appointment> Appointments { get; set; }

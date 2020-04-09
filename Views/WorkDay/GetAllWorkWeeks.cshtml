@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WorkDays>
+
+@{
+    ViewBag.Title = "Working weeks";
+}
+
+<h3>list of work weeks</h3>
+<br />
+
+<a asp-action="AddWorkWeek" class="btn btn-primary">Create work week</a>
+
+<br />
+
+@if (Model.Any())
+{
+    foreach (var workweek in Model)
+    {
+        <form method="post" asp-action="DeleteWorkWeek" asp-route-id="@workweek.WorkDaysId">
+            <div class="card m-3">
+                <div class="card-header">
+                    
+                    <h4>@workweek.WorkStart - @workweek.WorkEnd</h4>                   
+                </div>
+
+                <div class="card-body">
+                    <h5>**Info about appointments </h5>
+                </div>
+
+                <div class="card-footer">
+                    <a asp-action="EditWorkWeek" asp-route-id="@workweek.WorkDaysId" class="btn btn-primary">
+                        Modify
+                    </a>
+
+                    @*<button type="submit" class="btn btn-secondary" onClick="return confirm('You can always modify the work week. Are you sure you want to delete it? ')">
+                        Delete
+                        </button>
+                            //treba li uopće delete opcija kad već postoji modify
+                    *@
+                </div>
+
+            </div>
+        </form>
+    }
+}
+
+else
+{
+    
+        <h4>There are no working weeks created yet.</h4>
+    
+}

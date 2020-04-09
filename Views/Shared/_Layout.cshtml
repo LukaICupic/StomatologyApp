@@ -1,13 +1,37 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
 <html>
 <head>
 
     <meta name="viewport" content="width=device-width" />
 
+
+
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/jquery.min.js"></script>
+    @*<script src="~/lib/moment/moment.min.js"></script>*@
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    @*<script src="~/lib/bootstrap/js/js/bootstrap-datepicker.js"></script>*@
+
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-        <script src="~/lib/jquery/jquery.js"></script>
-        <script src="~/lib/bootstrap/js/bootstrap.js"></script>  
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/js/css/bootstrap-datepicker.css" rel="stylesheet" />
+
+
+
+
+    @*<script src="~/lib/bootstrap/jquery.min.js"></script>
+        <script src="~/lib/moment/moment.min.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/lib/bootstrap/js/js/bootstrap-datepicker.js"></script>*@
+    <!-- include your less or built css files  -->
+    <!--
+    bootstrap-datetimepicker-build.less will pull in "../bootstrap/variables.less" and "bootstrap-datetimepicker.less";
+    or
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
+    -->
 
     <title>@ViewBag.Title</title>
 </head>
@@ -27,7 +51,7 @@
                     <a class="nav-item nav-link active" asp-action="GetCustomers" asp-controller="Customer">Customers</a>
                     <a class="nav-item nav-link" asp-action="GetProcedures" asp-controller="DentalProcedure">Dental procedures</a>
                     <a class="nav-item nav-link" href="#">Appointments</a>
-                    <a class="nav-item nav-link" href="#">Work schedule</a>
+                    <a class="nav-item nav-link" asp-action="GetAllWorkWeeks" asp-controller="WorkDay">Work schedules</a>
                 </div>
             </div>
         </nav>
@@ -43,4 +67,10 @@
     </div>
 
 </body>
+
+
+
+
+
+
 </html>

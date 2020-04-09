@@ -9,10 +9,10 @@ namespace StomatologyApp.ViewModels.Customer
 {
     public class CustomerCreateVM
     {     
-        [Required]
+        [Required(ErrorMessage = "Name is a required field")]
         public string Name { get; set; }
         public string Address { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Telephone number is a required field")]
         public string TelephoneNumber { get; set; }
   
     }

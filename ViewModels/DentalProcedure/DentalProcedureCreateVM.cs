@@ -8,9 +8,9 @@ namespace StomatologyApp.ViewModels.DentalProcedure
 {
     public class DentalProcedureCreateVM
     {
-        [Required]
+        [Required(ErrorMessage = "The name of the procedure must be specified")]
         public string ProcedureName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The price of the procedure must be specified")]
         public decimal ProcedurePrice { get; set; }
     }
 }

@@ -12,9 +12,9 @@ namespace StomatologyApp.Interfaces
 
         IEnumerable<DentalProcedure> GetProcedures();
 
-        DentalProcedure AddProcedure(DentalProcedure customer);
+        DentalProcedure AddProcedure(DentalProcedure procedure);
 
-        DentalProcedure UpdateProcedure(DentalProcedure customer);
+        DentalProcedure UpdateProcedure(DentalProcedure procedure);
 
         DentalProcedure DeleteProcedure(int Id);
     }

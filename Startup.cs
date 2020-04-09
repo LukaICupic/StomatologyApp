@@ -33,6 +33,7 @@ namespace StomatologyApp
 
             services.AddScoped<ICustomer, SQLCustomerRepository>();
             services.AddScoped<IDentalProcedure, SQLDentalProcedureRepo>();
+            services.AddScoped<IWorkDay, SQLWorkDaysRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
