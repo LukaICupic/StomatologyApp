@@ -4,7 +4,7 @@
     ViewBag.Title = "Working weeks";
 }
 
-<h3>list of work weeks</h3>
+<h3>Work schedule</h3>
 <br />
 
 <a asp-action="AddWorkWeek" class="btn btn-primary">Create work week</a>
@@ -16,9 +16,8 @@
     foreach (var workweek in Model)
     {
         <form method="post" asp-action="DeleteWorkWeek" asp-route-id="@workweek.WorkDaysId">
-            <div class="card m-3">
-                <div class="card-header">
-                    
+            <div class="card m-3 text-center">
+                <div class="card-header">                   
                     <h4>@workweek.WorkStart - @workweek.WorkEnd</h4>                   
                 </div>
 
@@ -31,11 +30,10 @@
                         Modify
                     </a>
 
-                    @*<button type="submit" class="btn btn-secondary" onClick="return confirm('You can always modify the work week. Are you sure you want to delete it? ')">
+                    <button type="submit" class="btn btn-secondary" onClick="return confirm('You can always modify the work week. Are you sure you want to delete it? ')">
                         Delete
                         </button>
-                            //treba li uopće delete opcija kad već postoji modify
-                    *@
+                    
                 </div>
 
             </div>

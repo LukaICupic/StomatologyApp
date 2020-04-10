@@ -68,19 +68,34 @@
 
                     $(function () {   
 
+
+                        var date = new Date();
+                        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
                     $('#datetimepicker11').datetimepicker({
                         daysOfWeekDisabled: [0, 6],
                         format: 'DD.MM.YYYY HH:mm',
-                        useCurrent: false
-                    });
-                });
+                        minDate: today,
+                        useCurrent: false,
+                        disabledHours: [0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+                        enabledHours: [8, 9, 12, 13]
+                    
+                    })
+                        .on('dp.change', function (e) {
+                            $('#datetimepicker12').data("DateTimePicker").minDate(e.date);
+                        });
 
-                $(function () {
+                
                     $('#datetimepicker12').datetimepicker({
                         daysOfWeekDisabled: [0, 6],
-                        format: 'DD.MM.YYYY hh:mm',
-                        useCurrent: false
-                    });
+                        format: 'DD.MM.YYYY HH:mm',
+                        useCurrent: false,
+                        disabledHours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 19, 22, 23, 24],
+                        enabledHours: [16, 17, 20, 21]
+                    })
+                        .on('dp.change', function (e) {
+                            $('#datetimepicker11').data("DateTimePicker").maxDate(e.date);
+                        });;
                 });
                 </script>
         }
