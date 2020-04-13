@@ -16,7 +16,8 @@ namespace StomatologyApp.Interfaces
 
         Appointment UpdateAppointment(Appointment appointment);
 
-        Appointment DeleteAppointment(int Id);
+        void AppointmentCanceled (Appointment appointment);
 
+        Appointment DeleteAppointment(int Id);
     }
 }

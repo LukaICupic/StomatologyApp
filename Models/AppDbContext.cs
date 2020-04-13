@@ -16,9 +16,9 @@ namespace StomatologyApp.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<WorkDays> WorkDays { get; set; }
-
         public DbSet<DentalProcedure> DentalProcedures { get; set; }
-
+        public DbSet<AppointmentProcedure> AppointmentProcedures { get; set; }
+        public DbSet<CustomerProcedure> CustomerProcedures { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

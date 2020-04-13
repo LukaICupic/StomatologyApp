@@ -1,6 +1,4 @@
-Migrations/
 appsettings.Development.json
-appsettings.json
 StomatologyApp.csproj.user
 bin
 obj

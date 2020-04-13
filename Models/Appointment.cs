@@ -19,7 +19,7 @@ namespace StomatologyApp.Models
 
         [Required]
         public string Title { get; set; }
-        public string ProcedureDescription { get; set; } // možda će trebati nešto veće od stringa
+        public string ProcedureDescription { get; set; } 
 
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
