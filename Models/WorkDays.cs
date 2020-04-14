@@ -11,9 +11,16 @@ namespace StomatologyApp.Models
         [Key]
         public int WorkDaysId { get; set; }
 
-        [Required(ErrorMessage = "The starting hours and day of the working week must be specified")]
+        [Required(ErrorMessage = "The starting day of the working week must be specified")]
+        public DateTime WorkWeekStart { get; set; }
+
+        [Required(ErrorMessage = "The ending day of the working week must be specified")]
+        public DateTime WorkWeekEnd { get; set; }
+
+        [Required(ErrorMessage = "The starting hours of the working week must be specified")]
         public DateTime WorkStart { get; set; }
-        [Required(ErrorMessage = "The ending hours and day of the working week must be specified")]
+
+        [Required(ErrorMessage = "The ending hours of the working week must be specified")]
         public DateTime WorkEnd { get; set; }
 
         public List<Appointment> Appointments { get; set; }

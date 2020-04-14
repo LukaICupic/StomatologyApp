@@ -9,12 +9,19 @@ namespace StomatologyApp.ViewModels.WorkDays
     public class WorkWeekEditVM
     {
        
-            public int WorkDaysId { get; set; }
+        public int WorkDaysId { get; set; }
 
-            [Required(ErrorMessage = "The starting hours and day of the working week must be specified")]
-            public DateTime WorkStart { get; set; }
-            [Required(ErrorMessage = "The ending hours and day of the working week must be specified")]
-            public DateTime WorkEnd { get; set; }
-        
+        [Required(ErrorMessage = "The starting day of the working week must be specified")]
+        public DateTime WorkWeekStart { get; set; }
+
+        [Required(ErrorMessage = "The ending day of the working week must be specified")]
+        public DateTime WorkWeekEnd { get; set; }
+
+        [Required(ErrorMessage = "The starting hours of the working week must be specified")]
+        public DateTime WorkStart { get; set; }
+
+        [Required(ErrorMessage = "The ending hours of the working week must be specified")]
+        public DateTime WorkEnd { get; set; }
+
     }
 }
