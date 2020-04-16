@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp.Interfaces
 {
-    public interface IWorkDay
+    public interface IWorkDayRepository
     {
          IEnumerable<WorkDays> GetAllWorkWeeks();
 

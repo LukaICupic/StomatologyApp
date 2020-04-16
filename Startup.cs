@@ -31,10 +31,10 @@ namespace StomatologyApp
             services.AddDbContextPool<AppDbContext>(
                 options => options.UseSqlServer(_config.GetConnectionString("DatabaseConnection")));
 
-            services.AddScoped<ICustomer, SQLCustomerRepository>();
-            services.AddScoped<IDentalProcedure, SQLDentalProcedureRepo>();
-            services.AddScoped<IWorkDay, SQLWorkDaysRepository>();
-            services.AddScoped<IAppointment, SQLAppointmentRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IDentalProcedureRepository, DentalProcedureRepo>();
+            services.AddScoped<IWorkDayRepository, WorkDaysRepository>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

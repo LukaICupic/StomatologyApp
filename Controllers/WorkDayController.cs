@@ -12,17 +12,17 @@ namespace StomatologyApp.Controllers
 {
     public class WorkDayController : Controller
     {
-        private readonly IWorkDay workDay;
+        private readonly IWorkDayRepository _workDay;
 
-        public WorkDayController (IWorkDay workDay)
+        public WorkDayController (IWorkDayRepository workDay)
         {
-            this.workDay = workDay;
+            _workDay = workDay;
         }
 
         [HttpGet]
         public ViewResult GetAllWorkWeeks()
         {
-            var workWeek = workDay.GetAllWorkWeeks();
+            var workWeek = _workDay.GetAllWorkWeeks();
 
             return View(workWeek);
         }
@@ -30,7 +30,7 @@ namespace StomatologyApp.Controllers
         [HttpGet]
         public ViewResult GetWorkWeek(int Id)
         {
-            var workWeek = workDay.GetWorkWeek(Id);
+            var workWeek = _workDay.GetWorkWeek(Id);
 
             return View(workWeek);
         }
@@ -38,7 +38,7 @@ namespace StomatologyApp.Controllers
         [HttpGet]
         public ViewResult EditWorkWeek(int? Id)
         {
-            var workWeek = workDay.GetWorkWeek(Id.Value);
+            var workWeek = _workDay.GetWorkWeek(Id.Value);
 
             if (workWeek == null)
             {
@@ -63,7 +63,7 @@ namespace StomatologyApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var workWeek = workDay.GetWorkWeek(model.WorkDaysId);
+                var workWeek = _workDay.GetWorkWeek(model.WorkDaysId);
 
                 if (workWeek == null)
                 {
@@ -76,7 +76,7 @@ namespace StomatologyApp.Controllers
                 workWeek.WorkStart = model.WorkStart;
                 workWeek.WorkEnd = model.WorkEnd;
 
-                workDay.UpdateWorkWeek(workWeek);
+                _workDay.UpdateWorkWeek(workWeek);
 
                 return RedirectToAction("GetAllWorkWeeks");
 
@@ -106,7 +106,7 @@ namespace StomatologyApp.Controllers
                     WorkEnd = model.WorkEnd
                 };
 
-                workDay.AddWorkWeek(workWeek);
+                _workDay.AddWorkWeek(workWeek);
                 return RedirectToAction("GetAllWorkWeeks");
 
             }
@@ -117,7 +117,7 @@ namespace StomatologyApp.Controllers
         [HttpPost]
         public IActionResult DeleteWorkWeek(int Id)
         {
-            var workWeek = workDay.GetWorkWeek(Id);
+            var workWeek = _workDay.GetWorkWeek(Id);
 
             if (workWeek == null)
             {
@@ -126,7 +126,7 @@ namespace StomatologyApp.Controllers
 
             }
 
-            workDay.DeleteWorkWeek(Id);
+            _workDay.DeleteWorkWeek(Id);
             return RedirectToAction("GetAllWorkWeeks");
 
         }

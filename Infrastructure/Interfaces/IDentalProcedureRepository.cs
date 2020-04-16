@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp.Interfaces
 {
-    public interface IDentalProcedure
+    public interface IDentalProcedureRepository
     {
         DentalProcedure GetProcedure(int Id);
 

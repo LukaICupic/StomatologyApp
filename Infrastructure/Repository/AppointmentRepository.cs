@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp.Interfaces
 {
-    public class SQLAppointmentRepository : IAppointment
+    public class AppointmentRepository : IAppointmentRepository
     {
         private readonly AppDbContext context;
 
-        public SQLAppointmentRepository (AppDbContext context)
+        public AppointmentRepository (AppDbContext context)
         {
             this.context = context;
         }

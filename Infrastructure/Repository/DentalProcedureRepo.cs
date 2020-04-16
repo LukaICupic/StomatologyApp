@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp.Interfaces
 {
-    public class SQLDentalProcedureRepo : IDentalProcedure
+    public class DentalProcedureRepo : IDentalProcedureRepository
     {
         private readonly AppDbContext context;
 
-        public SQLDentalProcedureRepo(AppDbContext context)
+        public DentalProcedureRepo(AppDbContext context)
         {
             this.context = context;
         }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp.Interfaces
 {
-    public class SQLWorkDaysRepository : IWorkDay
+    public class WorkDaysRepository : IWorkDayRepository
     {
         private readonly AppDbContext context;
-        public SQLWorkDaysRepository (AppDbContext context)
+        public WorkDaysRepository (AppDbContext context)
         {
             this.context = context;
         }

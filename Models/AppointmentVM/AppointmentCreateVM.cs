@@ -28,7 +28,7 @@ namespace StomatologyApp.ViewModels.Appointment
 
         public List<Models.Customer> Customer { get; set; } //nije po konvencijama, promijeniti
 
-        public Models.WorkDays WorkDays { get; set; }
+        public Models.WorkDays WorkDays { get; set; } //obrisati jer ne treba
 
     }
 }

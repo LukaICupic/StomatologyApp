@@ -10,16 +10,16 @@ namespace StomatologyApp.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ICustomer customerRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomerController(ICustomer customerRepository)
+        public CustomerController(ICustomerRepository customerRepository)
         {
-            this.customerRepository = customerRepository;
+            _customerRepository = customerRepository;
         }
 
         public ViewResult GetCustomers()
         {
-            var customers = customerRepository.GetCustomers();
+            var customers = _customerRepository.GetCustomers();
 
             return View(customers);
         }
@@ -27,14 +27,14 @@ namespace StomatologyApp.Controllers
         [HttpGet] 
         public IActionResult GetCustomer(int Id)
         {
-            var customer = customerRepository.GetCustomer(Id);
+            var customer = _customerRepository.GetCustomer(Id);
             return View(customer);
         }
 
         [HttpGet]
         public ViewResult EditCustomer (int? Id)
         {
-            var customer = customerRepository.GetCustomer(Id.Value);
+            var customer = _customerRepository.GetCustomer(Id.Value);
 
             if (customer == null)
             {
@@ -59,7 +59,7 @@ namespace StomatologyApp.Controllers
             if (ModelState.IsValid)
             {
 
-                var customer = customerRepository.GetCustomer(model.CustomerId);
+                var customer = _customerRepository.GetCustomer(model.CustomerId);
 
                 if (customer == null)
                 {
@@ -71,7 +71,7 @@ namespace StomatologyApp.Controllers
                 customer.TelephoneNumber = model.TelephoneNumber;
                 customer.Address = model.Address;
 
-                customerRepository.UpdateCustomer(customer);
+                _customerRepository.UpdateCustomer(customer);
                 return RedirectToAction("GetCustomers");
 
             }
@@ -104,11 +104,11 @@ namespace StomatologyApp.Controllers
                     Name = customer.Name,
                     Address = customer.Address,
                     TelephoneNumber = customer.TelephoneNumber,
-                }; 
+                };
                 //idealno bi bilo kad se kod ne bi ponavljao
                 //provjeriti (async?)
 
-                customerRepository.AddCustomer(_customer);
+                _customerRepository.AddCustomer(_customer);
                 return RedirectToAction("GetCustomers");
             }
 
@@ -119,7 +119,7 @@ namespace StomatologyApp.Controllers
         [HttpPost]
         public  IActionResult DeleteCustomer(int Id)
         {
-            var _customer = customerRepository.GetCustomer(Id);
+            var _customer = _customerRepository.GetCustomer(Id);
 
             if(_customer == null) 
             {
@@ -127,7 +127,7 @@ namespace StomatologyApp.Controllers
                 return View("NotFound");
             }
 
-            var customer = customerRepository.DeleteCustomer(Id);
+            var customer = _customerRepository.DeleteCustomer(Id);
             return RedirectToAction("GetCustomers");
 
             

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp.Interfaces
 {
-    public class SQLCustomerRepository : ICustomer
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly AppDbContext context;
 
-        public SQLCustomerRepository(AppDbContext context)
+        public CustomerRepository(AppDbContext context)
         {
             this.context = context;
         }
@@ -19,6 +19,7 @@ namespace StomatologyApp.Interfaces
         {
             return context.Customers.Find(Id);
         }
+
 
         public IEnumerable<Customer> GetCustomers()
         {

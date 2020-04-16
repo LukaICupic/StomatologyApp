@@ -11,17 +11,17 @@ namespace StomatologyApp.Controllers
 {
     public class DentalProcedureController : Controller
     {
-        private readonly IDentalProcedure dentalProcedure;
+        private readonly IDentalProcedureRepository _dentalProcedure;
 
-        public DentalProcedureController(IDentalProcedure dentalProcedure)
+        public DentalProcedureController(IDentalProcedureRepository dentalProcedure)
         {
-            this.dentalProcedure = dentalProcedure;
+            _dentalProcedure = dentalProcedure;
         }
 
         [HttpGet]
         public ViewResult GetProcedures()
         {
-            var procedures = dentalProcedure.GetProcedures();
+            var procedures = _dentalProcedure.GetProcedures();
 
             return View(procedures);
         }
@@ -29,14 +29,14 @@ namespace StomatologyApp.Controllers
         [HttpGet]
         public ViewResult GetProcedure (int Id)
         {
-            var procedure = dentalProcedure.GetProcedure(Id);
+            var procedure = _dentalProcedure.GetProcedure(Id);
             return View(procedure);
         }
 
         [HttpGet]
         public ViewResult EditProcedure (int? Id)
         {
-            var procedure = dentalProcedure.GetProcedure(Id.Value);
+            var procedure = _dentalProcedure.GetProcedure(Id.Value);
 
             if(procedure == null)
             {
@@ -59,7 +59,7 @@ namespace StomatologyApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var procedure = dentalProcedure.GetProcedure(model.DentalProcedureId);
+                var procedure = _dentalProcedure.GetProcedure(model.DentalProcedureId);
 
                 if (procedure == null)
                 {
@@ -71,7 +71,7 @@ namespace StomatologyApp.Controllers
                 procedure.ProcedureName = model.ProcedureName;
                 procedure.ProcedurePrice = model.ProcedurePrice;
 
-                dentalProcedure.UpdateProcedure(procedure);
+                _dentalProcedure.UpdateProcedure(procedure);
 
                 return RedirectToAction("GetProcedures");
 
@@ -99,7 +99,7 @@ namespace StomatologyApp.Controllers
                     ProcedurePrice = model.ProcedurePrice
                 };
 
-                dentalProcedure.AddProcedure(procedure);
+                _dentalProcedure.AddProcedure(procedure);
                 return RedirectToAction("GetProcedures");
 
             }
@@ -110,7 +110,7 @@ namespace StomatologyApp.Controllers
         [HttpPost]
         public IActionResult DeleteProcedure (int Id)
         {
-            var procedure = dentalProcedure.GetProcedure(Id);
+            var procedure = _dentalProcedure.GetProcedure(Id);
 
             if(procedure == null)
             {
@@ -119,7 +119,7 @@ namespace StomatologyApp.Controllers
 
             }
 
-            dentalProcedure.DeleteProcedure(Id);
+            _dentalProcedure.DeleteProcedure(Id);
             return RedirectToAction("GetProcedures");
 
         }

@@ -12,19 +12,19 @@ namespace StomatologyApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IAppointment Iappointment;
-        private readonly ICustomer Icustomer;
+        private readonly IAppointmentRepository _appointment;
+        private readonly ICustomerRepository _customer;
 
-        public HomeController (IAppointment appointment, ICustomer customer)
+        public HomeController (IAppointmentRepository appointment, ICustomerRepository customer)
         {
-            Iappointment = appointment;
-            Icustomer = customer;
+            _appointment = appointment;
+            _customer = customer;
         }
 
         [HttpGet]
         public ViewResult Index()
         {
-            var model = Iappointment.GetAppointments();
+            var model = _appointment.GetAppointments();
 
             return View(model);
         }
@@ -32,7 +32,7 @@ namespace StomatologyApp.Controllers
         [HttpGet]
         public ViewResult GetAppointment (int Id)
         {
-            var model = Iappointment.GetAppointment(Id);
+            var model = _appointment.GetAppointment(Id);
 
             if (model == null)
             {
@@ -48,11 +48,14 @@ namespace StomatologyApp.Controllers
         {
             AppointmentCreateVM model = new AppointmentCreateVM();
 
-            var customer = Icustomer.GetCustomers();
+            var customer = _customer.GetCustomers();
 
             model.Customer = new List<Customer>(customer);
 
             return View(model);
+
+            //napraviti "search za ovo u sklopu viewa"
+            //jquery autocomplete
         }
 
 
@@ -65,7 +68,7 @@ namespace StomatologyApp.Controllers
         [HttpGet]
         public ViewResult EditAppointment(int? Id)
         {
-            var appointment = Iappointment.GetAppointment(Id.Value);
+            var appointment = _appointment.GetAppointment(Id.Value);
 
             if (appointment == null)
             {
@@ -99,7 +102,7 @@ namespace StomatologyApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var appointment = Iappointment.GetAppointment(model.AppointmentId);
+                var appointment = _appointment.GetAppointment(model.AppointmentId);
 
                 if(appointment == null)
                 {
@@ -107,8 +110,8 @@ namespace StomatologyApp.Controllers
                     return View("NotFound");
                 }
 
-                Iappointment.AppointmentCanceled(appointment);
-                Iappointment.DeleteAppointment(appointment.AppointmentId);
+                _appointment.AppointmentCanceled(appointment);
+                _appointment.DeleteAppointment(appointment.AppointmentId);
             }
 
             return View(model);

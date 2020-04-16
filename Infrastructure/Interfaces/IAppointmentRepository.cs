@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp.Interfaces
 {
-   public interface IAppointment
+   public interface IAppointmentRepository
     {
         IEnumerable<Appointment> GetAppointments();
 

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace StomatologyApp
 {
-    public interface ICustomer
+    public interface ICustomerRepository
     {
         Customer GetCustomer(int Id);
 
         IEnumerable<Customer> GetCustomers();
+
 
         Customer AddCustomer(Customer customer);
 

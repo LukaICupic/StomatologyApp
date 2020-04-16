@@ -28,7 +28,7 @@
         <form method="post" asp-action="DeleteWorkWeek" asp-route-id="@workweek.WorkDaysId">
             <div class="card m-3 text-center">
                 <div class="card-header">                   
-                    <h4 class="card-title">@day.@month.@year - @eday.@emonth.@eyear</h4>
+                    <h4 class="card-title">@workweek.WorkWeekStart.ToShortDateString() - @workweek.WorkWeekEnd.ToShortDateString()</h4>
                     <h5 class="card-subtitle mb-2 text-muted">@workweek.WorkStart.Hour - @workweek.WorkEnd.Hour</h5>
                 </div>
 

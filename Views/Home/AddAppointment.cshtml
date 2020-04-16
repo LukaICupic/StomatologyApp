@@ -4,14 +4,17 @@
     ViewBag.Title = "Create appointment";
 }
 
+    <h1>Create appointment</h1>
+
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+
+       
     </head>
 
-<h1>Create appointment</h1>
 
 
 <div class="container">
@@ -58,31 +61,29 @@
                 <div>
                     <textarea rows="5" class="form-control" asp-for="@Model.ProcedureDescription"></textarea>
                     <span asp-validation-for="@Model.ProcedureDescription"></span>
-                </div>
-
-                @* logika za odabir customera i pohrane odabira
-        (primjerice, IsSelected polje u Customer modelu i ako je "true" povezujemo ga sa appointmentom
-        dobivajuću na kraju appoitment i Customera koji je povezan sa tim appointmentom)*@
-
-                @foreach (var customer in Model.Customer)
-                {
-                    <div class="form-check m-1">
-                        
-                        <input type="checkbox" class="form-check-input" for="@customer.Name"/>
-                        <label class="form-check-label" for="@customer.Name" style="margin-left:25px">
-                            @customer.Name
-                        </label>
-                    </div>
-                    }
+                </div>              
 
                 </div>
-     </div>
+             </div>
+
+
+        @*@foreach (var customer in Model.Customer)
+        {
+            <div class="form-check m-1">
+
+                <input type="checkbox" class="form-check-input" for="@customer.Name"/>
+                <label class="form-check-label" for="@customer.Name" style="margin-left:25px">
+                    @customer.Name
+                </label>
+            </div>
+            }*@
+
+
 
 
         @*Još ubaciti Procedure
         Provjeriti da li onemogućava završetak radnog vremena prije samog početka radnog vremena
         Onemogućiti ako je 'working week' primjerice od 8 do 14 a netko želi staviti da je appointment u 16*@
-
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js"></script>
@@ -112,6 +113,9 @@
                     });
 
                 });
+
+               
+
             </script>
         }
     </form>
