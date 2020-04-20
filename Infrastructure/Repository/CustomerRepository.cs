@@ -26,6 +26,11 @@ namespace StomatologyApp.Interfaces
             return context.Customers;
         }
 
+        public IEnumerable<Customer> SearchForCustomer (string name)
+        {
+            var customer = context.Customers.Where(c => c.Name.Contains(name)).ToList();
+            return customer;
+        }
         public Customer AddCustomer(Customer customer)
         {
             context.Add(customer);

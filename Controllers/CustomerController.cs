@@ -31,6 +31,21 @@ namespace StomatologyApp.Controllers
             return View(customer);
         }
 
+        [HttpPost]
+        public IActionResult SearchForCustomer (string searchName)
+        {
+            var customers = _customerRepository.SearchForCustomer(searchName);
+
+            if (customers != null)
+            {
+                return View("FoundCustomers", customers);
+            }
+
+            return RedirectToAction("GetCustomers");
+            
+        }
+
+
         [HttpGet]
         public ViewResult EditCustomer (int? Id)
         {
@@ -92,12 +107,6 @@ namespace StomatologyApp.Controllers
             if (ModelState.IsValid)
             {
                
-                //if (customer.Address == null)
-                //{
-                //    customer.Name = customer.Name;
-                //    customer.Address = "The address was not specified";
-                //    customer.TelephoneNumber = customer.TelephoneNumber;
-                //};
 
                 Customer _customer = new Customer
                 {
@@ -105,8 +114,6 @@ namespace StomatologyApp.Controllers
                     Address = customer.Address,
                     TelephoneNumber = customer.TelephoneNumber,
                 };
-                //idealno bi bilo kad se kod ne bi ponavljao
-                //provjeriti (async?)
 
                 _customerRepository.AddCustomer(_customer);
                 return RedirectToAction("GetCustomers");

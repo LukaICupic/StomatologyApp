@@ -61,22 +61,12 @@
                 <div>
                     <textarea rows="5" class="form-control" asp-for="@Model.ProcedureDescription"></textarea>
                     <span asp-validation-for="@Model.ProcedureDescription"></span>
-                </div>              
-
                 </div>
-             </div>
 
 
-        @*@foreach (var customer in Model.Customer)
-        {
-            <div class="form-check m-1">
-
-                <input type="checkbox" class="form-check-input" for="@customer.Name"/>
-                <label class="form-check-label" for="@customer.Name" style="margin-left:25px">
-                    @customer.Name
-                </label>
+                </button>
             </div>
-            }*@
+        </div>
 
 
 
@@ -84,9 +74,11 @@
         @*Još ubaciti Procedure
         Provjeriti da li onemogućava završetak radnog vremena prije samog početka radnog vremena
         Onemogućiti ako je 'working week' primjerice od 8 do 14 a netko želi staviti da je appointment u 16*@
+   
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js"></script>
+
 
         @section Scripts{
             <script type="text/javascript">
@@ -114,9 +106,9 @@
 
                 });
 
-               
-
             </script>
+
+
         }
     </form>
 </div>

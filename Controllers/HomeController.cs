@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StomatologyApp.Interfaces;
 using StomatologyApp.Models;
 using StomatologyApp.ViewModels;
@@ -12,6 +14,7 @@ namespace StomatologyApp.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly IAppointmentRepository _appointment;
         private readonly ICustomerRepository _customer;
 
@@ -29,6 +32,8 @@ namespace StomatologyApp.Controllers
             return View(model);
         }
 
+      
+
         [HttpGet]
         public ViewResult GetAppointment (int Id)
         {
@@ -44,26 +49,20 @@ namespace StomatologyApp.Controllers
         }
 
         [HttpGet]
-        public ViewResult AddAppointment()
+        public ViewResult AddAppointment() //mozda problem jer nije Iaction
         {
-            AppointmentCreateVM model = new AppointmentCreateVM();
+            //AppointmentCreateVM model = new AppointmentCreateVM();
 
-            var customer = _customer.GetCustomers();
+            //var customer = _customer.GetCustomers();
 
-            model.Customer = new List<Customer>(customer);
+            //model.Customer = new List<Customer>(customer);
 
-            return View(model);
+            return View();
 
             //napraviti "search za ovo u sklopu viewa"
             //jquery autocomplete
         }
 
-
-        //[HttpPost]
-        //public IActionResult AddAppointment(AppointmentCreateVM model)
-        //{
-
-        //}
 
         [HttpGet]
         public ViewResult EditAppointment(int? Id)
@@ -92,9 +91,6 @@ namespace StomatologyApp.Controllers
 
          }
 
-        //[HttpPost]
-        //public ViewResult EditAppointment(AppointmentEditVM model)
-        //{ }
 
 
         [HttpPost]

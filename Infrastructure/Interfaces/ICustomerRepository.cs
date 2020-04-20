@@ -12,6 +12,7 @@ namespace StomatologyApp
 
         IEnumerable<Customer> GetCustomers();
 
+        IEnumerable<Customer> SearchForCustomer(string name);
 
         Customer AddCustomer(Customer customer);
 
