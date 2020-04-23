@@ -16,14 +16,6 @@
 
     foreach (var workweek in Model)
     {
-        var day = workweek.WorkWeekStart.Day;
-        var month = workweek.WorkWeekStart.Month;
-        var year = workweek.WorkWeekStart.Year;
-
-        var eday = workweek.WorkWeekEnd.Day;
-        var emonth = workweek.WorkWeekEnd.Month;
-        var eyear = workweek.WorkWeekEnd.Year;
-
 
         <form method="post" asp-action="DeleteWorkWeek" asp-route-id="@workweek.WorkDaysId">
             <div class="card m-3 text-center">

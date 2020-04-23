@@ -6,8 +6,6 @@
 
 <h3>Appointments</h3>
 
-<a asp-action="AddAppointment" class="btn btn-primary">Add appointment</a>
-
 @if (Model.Any())
 {
     foreach (var appointment in Model)
@@ -19,7 +17,7 @@
 
             <div class="card-body">
                 <h5 class="card-title">@appointment.Title</h5>
-                <h6 class="card-subtitle">@appointment.Customer.Name</h6>
+                @*<h6 class="card-subtitle">@appointment.Customer.Name</h6>*@
             </div>
 
             <div class="card-footer">

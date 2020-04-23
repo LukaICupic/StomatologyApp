@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StomatologyApp.Interfaces;
 using StomatologyApp.Models;
+using StomatologyApp.Models.AppointmentVM;
 using StomatologyApp.ViewModels;
 using StomatologyApp.ViewModels.Appointment;
 
@@ -17,11 +18,16 @@ namespace StomatologyApp.Controllers
 
         private readonly IAppointmentRepository _appointment;
         private readonly ICustomerRepository _customer;
+        private readonly IWorkDayRepository _workDayRepository;
+        private readonly IDentalProcedureRepository _dentalProcedure;
 
-        public HomeController (IAppointmentRepository appointment, ICustomerRepository customer)
+        public HomeController (IAppointmentRepository appointment, ICustomerRepository customer, IWorkDayRepository workDayRepository,
+            IDentalProcedureRepository dentalProcedure)
         {
             _appointment = appointment;
             _customer = customer;
+            _workDayRepository = workDayRepository;
+            _dentalProcedure = dentalProcedure;
         }
 
         [HttpGet]
@@ -38,6 +44,7 @@ namespace StomatologyApp.Controllers
         public ViewResult GetAppointment (int Id)
         {
             var model = _appointment.GetAppointment(Id);
+            var customer = _customer.GetCustomer(model.CustomerId);
 
             if (model == null)
             {
@@ -45,23 +52,85 @@ namespace StomatologyApp.Controllers
                 return View("NotFound");
             }
 
-            return View(model);
+            AppointmentSeeVM appointment = new AppointmentSeeVM
+            {
+                Customer = model.Customer,
+                CustomerId = model.CustomerId,
+                CustomerName = model.Customer.Name,
+                AppointmentId = model.AppointmentId,
+                AppointmentDay = model.AppointmentDay,
+                AppointmentStart = model.AppointmentStart,
+                AppointmentEnd = model.AppointmentEnd,
+                Title = model.Title,
+                ProcedureDescription = model.ProcedureDescription,
+                AppointmentProcedures = model.AppointmentProcedures
+            };
+            return View(appointment);
         }
 
         [HttpGet]
-        public ViewResult AddAppointment() //mozda problem jer nije Iaction
+        public IActionResult AddAppointment(int Id)
         {
-            //AppointmentCreateVM model = new AppointmentCreateVM();
 
-            //var customer = _customer.GetCustomers();
+            ViewBag.customerId = Id;
 
-            //model.Customer = new List<Customer>(customer);
+            if (Id == 0)
+            {
+                return View("NotFound");
 
-            return View();
+            }
+            AppointmentCreateVM model = new AppointmentCreateVM();
+            
 
-            //napraviti "search za ovo u sklopu viewa"
-            //jquery autocomplete
+            return View(model);
+
+            //ujedno poslati WorkWeek radi provjere (da li se appointment
+            //poklapa s radnim vremenom)
+
+            //popraviti AppointmentDay, AppointmentStart, AppointmentEnd 
+            //odnosno ograničiti pr isamo na datum, druga da direktno povezati na vrijeme tog datuma
+            //(automatski preuzimaju odabrani datum). Odnosno da već tako i POHRANJUJE (WorkDayController).
+
+            //unos DentalProcedura radi biranja postupaka koristeći AppointmentProcedures
+            //(već zakomentirana sekcija u AddAppointment.cshtml)
+
+            //ujedno popraviti generalne probleme (ViewBag prikaz nakon dohvaćanja NotFound viewa).
+
+            
+
+
         }
+
+        [HttpPost]
+        public IActionResult AddAppointment(AppointmentCreateVM model, int Id)
+        {
+
+            //vratiti (ModelState.valid) jer trenutačno puca zato što vrijeme nije dobro namješteno
+
+            //Workdays Id dolazi iz WorkDays objekta koji će se dohvatiti
+
+            if (Id != 0)
+                {
+
+                    Appointment appointment = new Appointment
+                    {
+                        AppointmentDay = model.AppointmentDay,
+                        AppointmentStart = model.AppointmentStart,
+                        AppointmentEnd = model.AppointmentEnd,
+                        Title = model.Title,
+                        ProcedureDescription = model.ProcedureDescription,
+                        CustomerId = Id,
+                        WorkDaysId = 23 //hardkodirano
+                    };
+
+                    _appointment.CreateAppointment(appointment);
+                    return RedirectToAction("GetAppointment", new { Id = appointment.AppointmentId });
+                }
+
+                return View();
+            }
+
+        
 
 
         [HttpGet]

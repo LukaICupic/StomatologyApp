@@ -12,23 +12,26 @@ namespace StomatologyApp.ViewModels.Appointment
     {
         public AppointmentCreateVM()
         {
-            Customer = new List<Models.Customer>();
+            Customer = new Models.Customer();
+            //AppointmentProcedures = new List<AppointmentProcedure>();
         }
        
-        [Required]
+        [Required(ErrorMessage = "Appointment day must be specified")]
         public DateTime AppointmentDay { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The starting time of the appointment must be specified")]
         public DateTime AppointmentStart { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The ending time of the appointment must be specified")]
         public DateTime AppointmentEnd { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Specify the title")]
         public string Title { get; set; }
         public string ProcedureDescription { get; set; }
 
-        public List<Models.Customer> Customer { get; set; } //nije po konvencijama, promijeniti
+        public Models.Customer Customer { get; set; }
 
-        public Models.WorkDays WorkDays { get; set; } //obrisati jer ne treba
+        //public  Models.WorkDays WorkDays { get; set; } //obrisati jer ne treba
+
+        //public List<Models.AppointmentProcedure> AppointmentProcedures { get; set; }
 
     }
 }
