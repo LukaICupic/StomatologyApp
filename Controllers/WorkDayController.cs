@@ -51,8 +51,6 @@ namespace StomatologyApp.Controllers
                 WorkDaysId = workWeek.WorkDaysId,
                 WorkWeekStart = workWeek.WorkWeekStart,
                 WorkWeekEnd = workWeek.WorkWeekEnd,
-                WorkStart = workWeek.WorkStart,
-                WorkEnd = workWeek.WorkEnd
             };
 
             return View(_workWeek);
@@ -73,8 +71,6 @@ namespace StomatologyApp.Controllers
 
                 workWeek.WorkWeekStart = model.WorkWeekStart;
                 workWeek.WorkWeekEnd = model.WorkWeekEnd;
-                workWeek.WorkStart = model.WorkStart;
-                workWeek.WorkEnd = model.WorkEnd;
 
                 _workDay.UpdateWorkWeek(workWeek);
 
@@ -102,8 +98,6 @@ namespace StomatologyApp.Controllers
                 {
                     WorkWeekStart = model.WorkWeekStart,
                     WorkWeekEnd = model.WorkWeekEnd,
-                    WorkStart = model.WorkStart,
-                    WorkEnd = model.WorkEnd
                 };
 
                 _workDay.AddWorkWeek(workWeek);

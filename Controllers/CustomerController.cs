@@ -28,6 +28,13 @@ namespace StomatologyApp.Controllers
         public IActionResult GetCustomer(int Id)
         {
             var customer = _customerRepository.GetCustomer(Id);
+
+            if(customer == null)
+            {
+                ViewBag.ErrorMessage = "The customer does not exist";
+                return View("NotFound");
+            }
+
             return View(customer);
         }
 
@@ -36,13 +43,13 @@ namespace StomatologyApp.Controllers
         {
             var customers = _customerRepository.SearchForCustomer(searchName);
 
-            if (customers != null)
+            if (customers == null)
             {
-                return View("FoundCustomers", customers);
+                ViewBag.ErrorMessage = "The customer you were looking for does not exist";
+                return View("NotFound");
             }
 
-            return RedirectToAction("GetCustomers");
-            
+            return View("FoundCustomers", customers);            
         }
 
 
@@ -105,9 +112,7 @@ namespace StomatologyApp.Controllers
         public IActionResult CreateCustomer (CustomerCreateVM customer)
         {
             if (ModelState.IsValid)
-            {
-               
-
+            {             
                 Customer _customer = new Customer
                 {
                     Name = customer.Name,

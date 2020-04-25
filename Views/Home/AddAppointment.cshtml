@@ -27,15 +27,6 @@
         <div class="col-sm-6" style="height:auto;">
             <div class="form-group">
 
-                <label asp-for="@Model.AppointmentDay">Select the day</label>
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' asp-for="@Model.AppointmentDay" class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar" asp-validation-for="@Model.AppointmentDay"></span>
-                    </span>
-                </div>
-                <br />
-
                 <label asp-for="@Model.AppointmentStart">Select the starting time</label>
                 <div class='input-group date' id='datetimepicker2'>
                     <input type='text' asp-for="@Model.AppointmentStart" class="form-control" />
@@ -70,13 +61,13 @@
                 {
                        <label asp-for="@proc.ProcedureName">@proc.ProcedureName</label>
                        <input type="checkbox" value=""/>
-                    
+
                 }
                 <br />
                 <br />*@
 
-                <input type="submit" value ="Create"class="btn btn-primary" style="width:auto"/>
-                    
+                <input type="submit" value="Create" class="btn btn-primary" style="width:auto" />
+
                 <a asp-action="GetCustomers" asp-controller="Customer" class="btn btn-secondary"
                    onclick="return confirm('The appointment will not be saved if you continue with this operation.')">
                     Cancel
@@ -99,25 +90,28 @@
         @section Scripts{
             <script type="text/javascript">
 
+
                 var date = new Date();
                 var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
                 $(function () {
-                    $('#datetimepicker1').datetimepicker({
-                        daysOfWeekDisabled: [0, 6],
-                        minDate: today,
-                        format: 'DD.MM.YYYY',
-
-                    })
-
 
                     $('#datetimepicker2').datetimepicker({
-                        format: 'HH:mm'
-                    });
+                        daysOfWeekDisabled: [0, 6],
+                        format: 'DD.MM.YYYY HH:mm',
+                        minDate: today
 
+
+                    }).on('dp.change', function (e) {
+                        $('#datetimepicker3').data("DateTimePicker").minDate(e.date);
+                    }); 
 
                     $('#datetimepicker3').datetimepicker({
-                        format: 'HH:mm'
+                        daysOfWeekDisabled: [0, 6],
+                        format: 'DD.MM.YYYY HH:mm',
+                        minDate: today
+
+                  
                     });
 
                 });

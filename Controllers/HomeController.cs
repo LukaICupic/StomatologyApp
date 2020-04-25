@@ -44,6 +44,12 @@ namespace StomatologyApp.Controllers
         public ViewResult GetAppointment (int Id)
         {
             var model = _appointment.GetAppointment(Id);
+
+            if (model == null)
+            {
+                ViewBag.ErrorMessage = "The appointment does not exist";
+                return View("NotFound");
+            }
             var customer = _customer.GetCustomer(model.CustomerId);
 
             if (model == null)
@@ -58,7 +64,6 @@ namespace StomatologyApp.Controllers
                 CustomerId = model.CustomerId,
                 CustomerName = model.Customer.Name,
                 AppointmentId = model.AppointmentId,
-                AppointmentDay = model.AppointmentDay,
                 AppointmentStart = model.AppointmentStart,
                 AppointmentEnd = model.AppointmentEnd,
                 Title = model.Title,
@@ -80,16 +85,15 @@ namespace StomatologyApp.Controllers
 
             }
             AppointmentCreateVM model = new AppointmentCreateVM();
-            
+
+            //nadodati listu workweeka u model
 
             return View(model);
 
+
+
             //ujedno poslati WorkWeek radi provjere (da li se appointment
             //poklapa s radnim vremenom)
-
-            //popraviti AppointmentDay, AppointmentStart, AppointmentEnd 
-            //odnosno ograničiti pr isamo na datum, druga da direktno povezati na vrijeme tog datuma
-            //(automatski preuzimaju odabrani datum). Odnosno da već tako i POHRANJUJE (WorkDayController).
 
             //unos DentalProcedura radi biranja postupaka koristeći AppointmentProcedures
             //(već zakomentirana sekcija u AddAppointment.cshtml)
@@ -105,27 +109,32 @@ namespace StomatologyApp.Controllers
         public IActionResult AddAppointment(AppointmentCreateVM model, int Id)
         {
 
-            //vratiti (ModelState.valid) jer trenutačno puca zato što vrijeme nije dobro namješteno
+            if (ModelState.IsValid) 
+            {
 
-            //Workdays Id dolazi iz WorkDays objekta koji će se dohvatiti
-
-            if (Id != 0)
+                if (Id != 0)
                 {
 
                     Appointment appointment = new Appointment
                     {
-                        AppointmentDay = model.AppointmentDay,
                         AppointmentStart = model.AppointmentStart,
                         AppointmentEnd = model.AppointmentEnd,
                         Title = model.Title,
                         ProcedureDescription = model.ProcedureDescription,
                         CustomerId = Id,
-                        WorkDaysId = 23 //hardkodirano
+                        WorkDaysId = 28 //hardkodirano
                     };
 
                     _appointment.CreateAppointment(appointment);
                     return RedirectToAction("GetAppointment", new { Id = appointment.AppointmentId });
                 }
+
+                else
+                {
+                    ViewBag.ErrorMessage = "User could not be found, so the appointment could not be created";
+                    return View("NotFound");
+                }
+            }
 
                 return View();
             }
@@ -146,7 +155,6 @@ namespace StomatologyApp.Controllers
 
             AppointmentEditVM model = new AppointmentEditVM
             {
-                AppointmentDay = appointment.AppointmentDay,
                 AppointmentStart = appointment.AppointmentStart,
                 AppointmentEnd = appointment.AppointmentEnd,
                 Title = appointment.Title,

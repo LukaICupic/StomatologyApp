@@ -17,11 +17,6 @@ namespace StomatologyApp.ViewModels.WorkDays
         [Required(ErrorMessage = "The ending day of the working week must be specified")]
         public DateTime WorkWeekEnd { get; set; }
 
-        [Required(ErrorMessage = "The starting hours of the working week must be specified")]
-        public DateTime WorkStart { get; set; }
-
-        [Required(ErrorMessage = "The ending hours of the working week must be specified")]
-        public DateTime WorkEnd { get; set; }
 
     }
 }

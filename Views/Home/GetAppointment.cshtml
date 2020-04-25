@@ -12,7 +12,7 @@
         <div class="card-body">
             <h5 class="card-title">@Model.AppointmentProcedures</h5>
             <h6 class="card-subtitle mb-2 text-muted">@Model.ProcedureDescription</h6>
-            <h6>@Model.AppointmentStart.Hour - @Model.AppointmentEnd.Hour</h6>
+            <h6>@Model.AppointmentStart.Hour - @Model.AppointmentEnd.Hour h</h6>
         </div>
         <div class="card-footer">
             <button disabled type="submit" asp-action="AppointmentCanceled" asp-route-id="@Model.AppointmentId" class="btn btn-primary">

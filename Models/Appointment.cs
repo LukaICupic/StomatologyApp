@@ -11,8 +11,6 @@ namespace StomatologyApp.Models
         [Key]
         public int AppointmentId { get; set; }
         [Required]
-        public DateTime AppointmentDay { get; set; }
-        [Required]
         public DateTime AppointmentStart { get; set; }
         [Required]
         public DateTime AppointmentEnd   { get; set; }

@@ -10,8 +10,7 @@ namespace StomatologyApp.ViewModels.Appointment
     public class AppointmentEditVM
     {
         public int AppointmentId { get; set; }
-        [Required]
-        public DateTime AppointmentDay { get; set; }
+
         [Required]
         public DateTime AppointmentStart { get; set; }
         [Required]
