@@ -13,7 +13,6 @@ namespace StomatologyApp.ViewModels.Appointment
         public AppointmentCreateVM()
         {
             //AppointmentProcedures = new List<AppointmentProcedure>();
-            //WorkDays = new List<Models.WorkDays>();
         }
  
         [Required(ErrorMessage = "The starting time of the appointment must be specified")]
@@ -24,7 +23,6 @@ namespace StomatologyApp.ViewModels.Appointment
         [Required(ErrorMessage ="Specify the title")]
         public string Title { get; set; }
         public string ProcedureDescription { get; set; }
-        //public  List<Models.WorkDays> WorkDays { get; set; } 
 
         //public Models.AppointmentProcedure AppointmentProcedures { get; set; }
 

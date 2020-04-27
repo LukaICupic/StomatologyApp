@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Clauses;
 using StomatologyApp.Interfaces;
 using StomatologyApp.Models;
 using StomatologyApp.Models.AppointmentVM;
@@ -85,35 +87,49 @@ namespace StomatologyApp.Controllers
 
             }
             AppointmentCreateVM model = new AppointmentCreateVM();
-
-            //nadodati listu workweeka u model
-
             return View(model);
 
 
-
-            //ujedno poslati WorkWeek radi provjere (da li se appointment
-            //poklapa s radnim vremenom)
-
             //unos DentalProcedura radi biranja postupaka koristeći AppointmentProcedures
             //(već zakomentirana sekcija u AddAppointment.cshtml)
-
-            //ujedno popraviti generalne probleme (ViewBag prikaz nakon dohvaćanja NotFound viewa).
-
-            
 
 
         }
 
         [HttpPost]
         public IActionResult AddAppointment(AppointmentCreateVM model, int Id)
-        {
+        {   
 
             if (ModelState.IsValid) 
             {
+                
 
                 if (Id != 0)
                 {
+                    if( model.AppointmentStart.Date != model.AppointmentEnd.Date)
+                    {
+                       
+                         ViewBag.ErrorMessage = ("The dates must match for the appointment to be created");
+                         return View();
+                    }
+
+                   if (model.AppointmentStart >= model.AppointmentEnd)
+                    {
+                        ViewBag.ErrorMessage = ("The starting time of the appointment was set the same as the ending time");
+                        return View();
+                    }
+
+                    var workkWeek = _workDayRepository.GetAllWorkWeeks()
+                        .FirstOrDefault(w => w.WorkWeekStart <= model.AppointmentStart && w.WorkWeekEnd >= model.AppointmentEnd);
+
+
+                    if (workkWeek == null)
+                    {
+                        ViewBag.ErrorMessage = ("The appointment can not be created for the time of that working week was either overstepped," +
+                            " not defined or the appointment was set too early. Please check if you have created the working week");
+                        return View();
+                    }
+
 
                     Appointment appointment = new Appointment
                     {
@@ -122,8 +138,8 @@ namespace StomatologyApp.Controllers
                         Title = model.Title,
                         ProcedureDescription = model.ProcedureDescription,
                         CustomerId = Id,
-                        WorkDaysId = 28 //hardkodirano
-                    };
+                        WorkDaysId =  workkWeek.WorkDaysId                   
+                        };
 
                     _appointment.CreateAppointment(appointment);
                     return RedirectToAction("GetAppointment", new { Id = appointment.AppointmentId });
@@ -137,7 +153,7 @@ namespace StomatologyApp.Controllers
             }
 
                 return View();
-            }
+        }
 
         
 
