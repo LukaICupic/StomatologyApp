@@ -39,25 +39,6 @@
                 </div>
                 <br />
 
-                @*<label asp-for="@Model.WorkStart">Pick the starting time</label>
-                <div class="input-group date" id="datetimepicker3">
-                    <input type="text" asp-for="@Model.WorkStart" class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time" asp-validation-for="@Model.WorkStart">
-                        </span>
-                    </span>
-                </div>
-
-                <label asp-for="@Model.WorkEnd">Pick the ending time</label>
-                <div class="input-group date" id="datetimepicker4">
-                    <input type="text" asp-for="@Model.WorkEnd" class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time" asp-validation-for="@Model.WorkEnd">
-                        </span>
-                    </span>
-                </div>*@
-                <br />
-
                 <button type="submit" class="btn btn-primary">Create schedule</button>
                 <a asp-action="GetAllWorkWeeks" class="btn btn-secondary">Cancel</a>
             </div>
@@ -68,9 +49,6 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js"></script>
-
-        @* problem je što sprema sve u obliku datetime-a (i WorkStart(default datum s definiranim vremenom)
-            i WorkWeekStart(default vrijeme s definiranim datumom) primjerice ) *@
 
         @section Scripts {
 

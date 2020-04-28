@@ -18,7 +18,7 @@
             <button disabled type="submit" asp-action="AppointmentCanceled" asp-route-id="@Model.AppointmentId" class="btn btn-primary">
                 Cancel appointment
             </button>
-            <button disabled type="submit" asp-action="DeleteAppointment" asp-route-id="@Model.AppointmentId" class="btn btn-primary"
+            <button disabled type="submit" asp-action="DeleteAppointment" asp-route-id="@Model.AppointmentId" class="btn btn-secondary"
                     onclick="return confirm(`Are you sure you want to delete this appointment? If it's been canceled or the customer did not come please use` +
                     ` the 'Canceled appointment' button.`)">
                 Delete

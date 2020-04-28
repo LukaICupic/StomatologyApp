@@ -185,9 +185,8 @@ namespace StomatologyApp.Controllers
          }
 
 
-
         [HttpPost]
-        public IActionResult AppointmentCanceled(AppointmentEditVM model)
+        public IActionResult AppointmentCanceled(Appointment model)
         {
             if (ModelState.IsValid)
             {
@@ -200,7 +199,12 @@ namespace StomatologyApp.Controllers
                 }
 
                 _appointment.AppointmentCanceled(appointment);
-                _appointment.DeleteAppointment(appointment.AppointmentId);
+
+                //_appointment.DeleteAppointment(appointment.AppointmentId);
+
+                //ne obrisati već postaviti kao obrisano s "ProcedureCanceled" boolom u AppointmentProcedures
+                //specifično ih prikazati i označiti u GetAppointments
+                return View("GetAppointments");
             }
 
             return View(model);
