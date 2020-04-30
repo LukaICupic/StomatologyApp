@@ -10,11 +10,7 @@ namespace StomatologyApp.ViewModels.Appointment
 {
     public class AppointmentCreateVM
     {
-        public AppointmentCreateVM()
-        {
-            //AppointmentProcedures = new List<AppointmentProcedure>();
-        }
- 
+
         [Required(ErrorMessage = "The starting time of the appointment must be specified")]
         public DateTime AppointmentStart { get; set; }
         [Required(ErrorMessage = "The ending time of the appointment must be specified")]
@@ -23,8 +19,6 @@ namespace StomatologyApp.ViewModels.Appointment
         [Required(ErrorMessage ="Specify the title")]
         public string Title { get; set; }
         public string ProcedureDescription { get; set; }
-
-        //public Models.AppointmentProcedure AppointmentProcedures { get; set; }
-
+        public List<Models.DentalProcedure> DentalProcedures { get; set; }
     }
 }

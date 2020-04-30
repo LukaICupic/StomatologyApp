@@ -29,6 +29,9 @@
                 <br />
                 <div class="text-danger">
                     @ViewBag.ErrorMessage
+                    <br />
+                    <br />
+                    @ViewBag.Message
                 </div>
                 <br />
                 <label asp-for="@Model.AppointmentStart">Select the starting time</label>
@@ -59,15 +62,37 @@
                     <textarea rows="5" class="form-control" asp-for="@Model.ProcedureDescription"></textarea>
                     <span asp-validation-for="@Model.ProcedureDescription" class="text-danger"></span>
                 </div>
-                @*<br />
-        @foreach (var proc in Model.DentalProcedures)
-        {
-               <label asp-for="@proc.ProcedureName">@proc.ProcedureName</label>
-               <input type="checkbox" value=""/>
+                <br />
 
-        }
-        <br />
-        <br />*@
+                @*@for (var i = 0; i < Model.DentalProcedures.Count(); i++)
+                {*@
+
+                    @*<input type="hidden" asp-for="@Model.DentalProcedures[i].DentalProcedureId"/>
+                    <input type ="hidden" asp-for="@Model.DentalProcedures[i].ProcedureName"/>
+                    <div class=" custom-control custom-checkbox custom-control-inline">
+
+                        <input asp-for="@Model.DentalProcedures[i].isEnabled" class="custom-control-input demo"/>
+                        <label class="custom-control-label" asp-for="@Model.DentalProcedures[i].isEnabled">
+                            @Model.DentalProcedures[i].ProcedureName
+                        </label>
+
+                    </div>*@
+
+
+
+
+
+
+
+
+                       @*<label asp-for="@proc.ProcedureName">@proc.ProcedureName</label>
+                       <input type="checkbox" value=""/>*@
+
+                @* } *@
+                <br />
+                <br />
+
+
 
                 <input type="submit" value="Create" class="btn btn-primary" style="width:auto" />
 

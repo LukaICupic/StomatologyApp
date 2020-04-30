@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StomatologyApp.Models;
 
 namespace StomatologyApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200402133333_Migration_1")]
-    partial class Migration_1
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,13 +25,16 @@ namespace StomatologyApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("AppointmentCanceled");
-
                     b.Property<DateTime>("AppointmentEnd");
 
                     b.Property<DateTime>("AppointmentStart");
 
                     b.Property<int>("CustomerId");
+
+                    b.Property<string>("ProcedureDescription");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
 
                     b.Property<int>("WorkDaysId");
 
@@ -52,11 +53,13 @@ namespace StomatologyApp.Migrations
 
                     b.Property<int>("DentalProcedureId");
 
+                    b.Property<bool>("ProcedureAppointmentCanceled");
+
                     b.HasKey("AppointmentId", "DentalProcedureId");
 
                     b.HasIndex("DentalProcedureId");
 
-                    b.ToTable("AppointmentProcedure");
+                    b.ToTable("AppointmentProcedures");
                 });
 
             modelBuilder.Entity("StomatologyApp.Models.Customer", b =>
@@ -67,15 +70,38 @@ namespace StomatologyApp.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("TelephoneNumber");
+                    b.Property<string>("TelephoneNumber")
+                        .IsRequired();
 
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            CustomerId = 1,
+                            Address = "Miramarska 22",
+                            Name = "Luka",
+                            TelephoneNumber = "0993132245"
+                        },
+                        new
+                        {
+                            CustomerId = 2,
+                            Address = "Miramarska 23",
+                            Name = "Ana",
+                            TelephoneNumber = "0993132246"
+                        },
+                        new
+                        {
+                            CustomerId = 3,
+                            Address = "Miramarska 24",
+                            Name = "Vilihrast",
+                            TelephoneNumber = "0993131245"
+                        });
                 });
 
             modelBuilder.Entity("StomatologyApp.Models.CustomerProcedure", b =>
@@ -88,7 +114,7 @@ namespace StomatologyApp.Migrations
 
                     b.HasIndex("DentalProcedureId");
 
-                    b.ToTable("CustomerProcedure");
+                    b.ToTable("CustomerProcedures");
                 });
 
             modelBuilder.Entity("StomatologyApp.Models.DentalProcedure", b =>
@@ -97,12 +123,13 @@ namespace StomatologyApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("DentalProcedureCanceled");
-
-                    b.Property<string>("ProcedureName");
+                    b.Property<string>("ProcedureName")
+                        .IsRequired();
 
                     b.Property<decimal>("ProcedurePrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("isEnabled");
 
                     b.HasKey("DentalProcedureId");
 
@@ -115,9 +142,9 @@ namespace StomatologyApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("WorkEnd");
+                    b.Property<DateTime>("WorkWeekEnd");
 
-                    b.Property<DateTime>("WorkStart");
+                    b.Property<DateTime>("WorkWeekStart");
 
                     b.HasKey("WorkDaysId");
 

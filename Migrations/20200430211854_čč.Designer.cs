@@ -10,8 +10,8 @@ using StomatologyApp.Models;
 namespace StomatologyApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200425135912_migra8")]
-    partial class migra8
+    [Migration("20200430211854_čč")]
+    partial class čč
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,6 @@ namespace StomatologyApp.Migrations
                     b.Property<int>("AppointmentId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("AppointmentDay");
 
                     b.Property<DateTime>("AppointmentEnd");
 
@@ -132,6 +130,8 @@ namespace StomatologyApp.Migrations
 
                     b.Property<decimal>("ProcedurePrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("isEnabled");
 
                     b.HasKey("DentalProcedureId");
 

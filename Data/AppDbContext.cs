@@ -24,11 +24,11 @@ namespace StomatologyApp.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+  
 
             modelBuilder.Entity<DentalProcedure>()
                 .Property(p => p.ProcedurePrice)
                 .HasColumnType("decimal(18,2)");
-
 
 
             modelBuilder.Entity<Appointment>()

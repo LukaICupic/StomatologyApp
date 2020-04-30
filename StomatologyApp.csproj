@@ -6,21 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20200402124505_migra.cs" />
-    <Compile Remove="Data\Migrations\20200402124505_migra.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200402124919_k.cs" />
-    <Compile Remove="Data\Migrations\20200402124919_k.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200402130547_k.cs" />
-    <Compile Remove="Data\Migrations\20200402130547_k.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200402131108_k.cs" />
-    <Compile Remove="Data\Migrations\20200402131108_k.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200402132039_kk.cs" />
-    <Compile Remove="Data\Migrations\20200402132039_kk.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200402133041_kk.cs" />
-    <Compile Remove="Data\Migrations\20200402133041_kk.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.4.1" />
     <PackageReference Include="Bootstrap.v3.Datetimepicker" Version="4.17.45" />
     <PackageReference Include="Bootstrap.v3.Datetimepicker.CSS" Version="4.17.45" />

@@ -29,7 +29,7 @@ namespace StomatologyApp
             services.AddMvc();
 
             services.AddDbContextPool<AppDbContext>(
-                options => options.UseSqlServer(_config.GetConnectionString("DatabaseConnection")));
+                options => options.UseSqlServer(_config.GetConnectionString("SSMSConnectionString")));
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IDentalProcedureRepository, DentalProcedureRepo>();

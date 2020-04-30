@@ -86,13 +86,12 @@ namespace StomatologyApp.Controllers
                 return View("NotFound");
 
             }
-            AppointmentCreateVM model = new AppointmentCreateVM();
+            AppointmentCreateVM model = new AppointmentCreateVM
+            {
+                DentalProcedures = _dentalProcedure.GetProcedures().ToList()
+            };
+
             return View(model);
-
-
-            //unos DentalProcedura radi biranja postupaka koristeći AppointmentProcedures
-            //(već zakomentirana sekcija u AddAppointment.cshtml)
-
 
         }
 
@@ -110,12 +109,14 @@ namespace StomatologyApp.Controllers
                     {
                        
                          ViewBag.ErrorMessage = ("The dates must match for the appointment to be created");
-                         return View();
+                        ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
+                        return View();
                     }
 
                    if (model.AppointmentStart >= model.AppointmentEnd)
                     {
                         ViewBag.ErrorMessage = ("The starting time of the appointment was set the same as the ending time");
+                        ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
                         return View();
                     }
 
@@ -123,10 +124,11 @@ namespace StomatologyApp.Controllers
                         .FirstOrDefault(w => w.WorkWeekStart <= model.AppointmentStart && w.WorkWeekEnd >= model.AppointmentEnd);
 
 
-                    if (workkWeek == null)
+                    if (workkWeek == null || model.AppointmentEnd.Hour > workkWeek.WorkWeekEnd.Hour || model.AppointmentStart.Hour < workkWeek.WorkWeekStart.Hour)
                     {
                         ViewBag.ErrorMessage = ("The appointment can not be created for the time of that working week was either overstepped," +
-                            " not defined or the appointment was set too early. Please check if you have created the working week");
+                            " not defined or the appointment was set too early. Please check if you have created the working week.");
+                        ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
                         return View();
                     }
 
@@ -138,8 +140,33 @@ namespace StomatologyApp.Controllers
                         Title = model.Title,
                         ProcedureDescription = model.ProcedureDescription,
                         CustomerId = Id,
-                        WorkDaysId =  workkWeek.WorkDaysId                   
+                        WorkDaysId =  workkWeek.WorkDaysId,
                         };
+
+                    //foreach(var proc in model.DentalProcedures)
+                    //{
+                    //    if (proc.isEnabled)
+                    //    {
+                    //        //var dentalProc = new DentalProcedure()
+                    //        //{
+                    //        //    ProcedureName = proc.ProcedureName,
+                    //        //    ProcedurePrice = proc.ProcedurePrice,
+                    //        //    //CustomerProcedures
+                    //        //};
+
+                    //        appointment.AppointmentProcedures = new List<AppointmentProcedure>
+                    //        {
+                    //            new AppointmentProcedure
+                    //            {
+                    //                Appointment = appointment,
+                    //                DentalProcedure = proc,
+                    //                ProcedureAppointmentCanceled = false
+                    //            }
+                    //        };
+                    //    }
+                    //}
+
+
 
                     _appointment.CreateAppointment(appointment);
                     return RedirectToAction("GetAppointment", new { Id = appointment.AppointmentId });

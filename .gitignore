@@ -2,3 +2,4 @@ appsettings.Development.json
 StomatologyApp.csproj.user
 bin
 obj
+node_modules/
