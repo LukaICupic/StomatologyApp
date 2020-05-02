@@ -6,11 +6,19 @@
 <form method="post">
     <div class="card m-3">
         <div class="card-header">
-            <h4>@Model.Title</h4>
-            <h5>@Model.CustomerName</h5>
+            <h4>Title:
+            @Model.Title</h4>
+
+            <h5>Customer:
+            @Model.CustomerName</h5>
         </div>
         <div class="card-body">
-            <h5 class="card-title">@Model.AppointmentProcedures</h5>
+
+            @*@foreach (var proc in Model.AppointmentProcedures)
+            {
+                <h5 class="card-title">@proc.DentalProcedure.ProcedureName</h5>
+
+            }*@
             <h6 class="card-subtitle mb-2 text-muted">@Model.ProcedureDescription</h6>
             <h6>@Model.AppointmentStart.Hour - @Model.AppointmentEnd.Hour h</h6>
         </div>

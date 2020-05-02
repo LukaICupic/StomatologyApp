@@ -24,7 +24,7 @@ namespace StomatologyApp.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-  
+
 
             modelBuilder.Entity<DentalProcedure>()
                 .Property(p => p.ProcedurePrice)
@@ -69,7 +69,7 @@ namespace StomatologyApp.Models
                 .WithMany(cp => cp.AppointmentProcedures)
                 .HasForeignKey(dp => dp.DentalProcedureId);
 
-            
+
 
             modelBuilder.Entity<Customer>()
                 .HasData(
@@ -97,5 +97,7 @@ namespace StomatologyApp.Models
 
 
         }
+
+     
     }
 }

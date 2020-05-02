@@ -10,8 +10,8 @@ using StomatologyApp.Models;
 namespace StomatologyApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200430211854_čč")]
-    partial class čč
+    [Migration("20200502185006_ff")]
+    partial class ff
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

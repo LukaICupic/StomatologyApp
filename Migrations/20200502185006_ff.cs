@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StomatologyApp.Migrations
 {
-    public partial class čč : Migration
+    public partial class ff : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

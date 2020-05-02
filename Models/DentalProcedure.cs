@@ -10,7 +10,7 @@ namespace StomatologyApp.Models
     public class DentalProcedure
     {
         [Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DentalProcedureId { get; set; }
         [Required(ErrorMessage = "The name of the procedure must be specified")]
         public string ProcedureName { get; set; }

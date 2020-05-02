@@ -64,10 +64,10 @@
                 </div>
                 <br />
 
-                @*@for (var i = 0; i < Model.DentalProcedures.Count(); i++)
-                {*@
+                @for (var i = 0; i < Model.DentalProcedures.Count(); i++)
+                {
 
-                    @*<input type="hidden" asp-for="@Model.DentalProcedures[i].DentalProcedureId"/>
+                    <input type="hidden" asp-for="@Model.DentalProcedures[i].DentalProcedureId"/>
                     <input type ="hidden" asp-for="@Model.DentalProcedures[i].ProcedureName"/>
                     <div class=" custom-control custom-checkbox custom-control-inline">
 
@@ -76,19 +76,8 @@
                             @Model.DentalProcedures[i].ProcedureName
                         </label>
 
-                    </div>*@
-
-
-
-
-
-
-
-
-                       @*<label asp-for="@proc.ProcedureName">@proc.ProcedureName</label>
-                       <input type="checkbox" value=""/>*@
-
-                @* } *@
+                    </div>
+                 } 
                 <br />
                 <br />
 

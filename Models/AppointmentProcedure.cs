@@ -10,7 +10,6 @@ namespace StomatologyApp.Models
     {
         public int AppointmentId { get; set; }
         public Appointment Appointment { get; set; }
-
         public int DentalProcedureId { get; set; }
         public DentalProcedure DentalProcedure { get; set; }
 

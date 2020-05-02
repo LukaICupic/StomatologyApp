@@ -8,6 +8,10 @@ namespace StomatologyApp.Models
 {
     public class Appointment
     {
+        public Appointment()
+        {
+            AppointmentProcedures = new List<AppointmentProcedure>();
+        }
 
         [Key]
         public int AppointmentId { get; set; }

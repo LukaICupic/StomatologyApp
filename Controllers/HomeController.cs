@@ -20,16 +20,18 @@ namespace StomatologyApp.Controllers
 
         private readonly IAppointmentRepository _appointment;
         private readonly ICustomerRepository _customer;
-        private readonly IWorkDayRepository _workDayRepository;
+        private readonly IWorkDayRepository _workDay;
         private readonly IDentalProcedureRepository _dentalProcedure;
+        private readonly AppDbContext _context;
 
         public HomeController (IAppointmentRepository appointment, ICustomerRepository customer, IWorkDayRepository workDayRepository,
-            IDentalProcedureRepository dentalProcedure)
+            IDentalProcedureRepository dentalProcedure, AppDbContext context)
         {
             _appointment = appointment;
             _customer = customer;
-            _workDayRepository = workDayRepository;
+            _workDay = workDayRepository;
             _dentalProcedure = dentalProcedure;
+            _context = context;
         }
 
         [HttpGet]
@@ -62,7 +64,7 @@ namespace StomatologyApp.Controllers
 
             AppointmentSeeVM appointment = new AppointmentSeeVM
             {
-                Customer = model.Customer,
+                Customer = customer,
                 CustomerId = model.CustomerId,
                 CustomerName = model.Customer.Name,
                 AppointmentId = model.AppointmentId,
@@ -86,6 +88,7 @@ namespace StomatologyApp.Controllers
                 return View("NotFound");
 
             }
+
             AppointmentCreateVM model = new AppointmentCreateVM
             {
                 DentalProcedures = _dentalProcedure.GetProcedures().ToList()
@@ -120,7 +123,7 @@ namespace StomatologyApp.Controllers
                         return View();
                     }
 
-                    var workkWeek = _workDayRepository.GetAllWorkWeeks()
+                    var workkWeek = _workDay.GetAllWorkWeeks()
                         .FirstOrDefault(w => w.WorkWeekStart <= model.AppointmentStart && w.WorkWeekEnd >= model.AppointmentEnd);
 
 
@@ -132,6 +135,8 @@ namespace StomatologyApp.Controllers
                         return View();
                     }
 
+                    var customer = _customer.GetCustomer(Id);
+                    var workWeek = _workDay.GetWorkWeek(workkWeek.WorkDaysId);
 
                     Appointment appointment = new Appointment
                     {
@@ -140,36 +145,30 @@ namespace StomatologyApp.Controllers
                         Title = model.Title,
                         ProcedureDescription = model.ProcedureDescription,
                         CustomerId = Id,
+                        Customer = customer,
                         WorkDaysId =  workkWeek.WorkDaysId,
+                        WorkDays = workWeek
                         };
 
-                    //foreach(var proc in model.DentalProcedures)
-                    //{
-                    //    if (proc.isEnabled)
-                    //    {
-                    //        //var dentalProc = new DentalProcedure()
-                    //        //{
-                    //        //    ProcedureName = proc.ProcedureName,
-                    //        //    ProcedurePrice = proc.ProcedurePrice,
-                    //        //    //CustomerProcedures
-                    //        //};
+                    foreach (var proc in model.DentalProcedures)
+                    {
 
-                    //        appointment.AppointmentProcedures = new List<AppointmentProcedure>
-                    //        {
-                    //            new AppointmentProcedure
-                    //            {
-                    //                Appointment = appointment,
-                    //                DentalProcedure = proc,
-                    //                ProcedureAppointmentCanceled = false
-                    //            }
-                    //        };
-                    //    }
-                    //}
+                        if (proc.isEnabled)
+                        {
+
+                            appointment.AppointmentProcedures.Add(new AppointmentProcedure { 
+                                Appointment = appointment,
+                                DentalProcedure = _context.DentalProcedures.FirstOrDefault(d => d.DentalProcedureId == proc.DentalProcedureId),
+                                ProcedureAppointmentCanceled = false
+                            });
+                        }
+                    }
 
 
 
                     _appointment.CreateAppointment(appointment);
-                    return RedirectToAction("GetAppointment", new { Id = appointment.AppointmentId });
+                    return RedirectToAction("Index");
+                        //, new { Id = appointment.AppointmentId });
                 }
 
                 else
