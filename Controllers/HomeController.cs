@@ -202,7 +202,8 @@ namespace StomatologyApp.Controllers
                 Title = appointment.Title,
                 ProcedureDescription = appointment.ProcedureDescription,
                 AppointmentProcedures = appointment.AppointmentProcedures,
-                Customer = appointment.Customer //samo jedan pristiže
+                Customer = appointment.Customer,
+                WorkDays = appointment.WorkDays
 
             };
 
