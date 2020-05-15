@@ -13,12 +13,6 @@
             @Model.CustomerName</h5>
         </div>
         <div class="card-body">
-
-            @*@foreach (var proc in Model.AppointmentProcedures)
-            {
-                <h5 class="card-title">@proc.DentalProcedure.ProcedureName</h5>
-
-            }*@
             <h6 class="card-subtitle mb-2 text-muted">@Model.ProcedureDescription</h6>
             <h6>@Model.AppointmentStart.Hour - @Model.AppointmentEnd.Hour h</h6>
         </div>
@@ -31,7 +25,7 @@
                     ` the 'Canceled appointment' button.`)">
                 Delete
             </button>
-            <a href="#" @*asp-action="EditAppointment" asp-route-id="@Model.AppointmentId"*@ class="btn btn-primary">
+            <a asp-action="EditAppointment" asp-route-id="@Model.AppointmentId"*@ class="btn btn-primary">
             Edit
             </a>
         </div>

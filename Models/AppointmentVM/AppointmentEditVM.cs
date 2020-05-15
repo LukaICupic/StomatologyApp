@@ -9,7 +9,12 @@ namespace StomatologyApp.ViewModels.Appointment
 {
     public class AppointmentEditVM
     {
-        public int AppointmentId { get; set; }
+        public AppointmentEditVM()
+        {
+            PickedDentalProcedures = new List<Models.DentalProcedure>();
+
+            UnPickedDentalProcedures = new List<Models.DentalProcedure>();
+        }
 
         [Required]
         public DateTime AppointmentStart { get; set; }
@@ -20,10 +25,9 @@ namespace StomatologyApp.ViewModels.Appointment
         public string Title { get; set; }
         public string ProcedureDescription { get; set; }
 
-        public Models.Customer Customer { get; set; } 
+        public List<Models.DentalProcedure> PickedDentalProcedures { get; set; }
 
-        public Models.WorkDays WorkDays { get; set; }
+        public List<Models.DentalProcedure> UnPickedDentalProcedures { get; set; }
 
-        public List<AppointmentProcedure> AppointmentProcedures { get; set; }
     }
 }

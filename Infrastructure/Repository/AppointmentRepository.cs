@@ -17,7 +17,7 @@ namespace StomatologyApp.Interfaces
 
         public IEnumerable<Appointment> GetAppointments()
         {
-            return context.Appointments;
+            return context.Appointments.OrderBy(a => a.AppointmentStart).ToList();
         }
 
         public Appointment GetAppointment (int Id)
@@ -49,6 +49,19 @@ namespace StomatologyApp.Interfaces
             appCanceled.ProcedureAppointmentCanceled = true;
             context.SaveChanges();
 
+            
+        }
+
+        public void DeleteAppProc(int Id)
+        {
+            var appProc = context.AppointmentProcedures.Where(a => a.AppointmentId == Id).ToList();
+            
+                foreach (var app in appProc)
+                {
+                   context.Remove(app);
+                }
+
+                  context.SaveChanges();
             
         }
 

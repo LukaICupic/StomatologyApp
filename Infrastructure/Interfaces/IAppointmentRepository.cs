@@ -18,6 +18,8 @@ namespace StomatologyApp.Interfaces
 
         void AppointmentCanceled (Appointment appointment);
 
+        void DeleteAppProc(int Id);
+
         Appointment DeleteAppointment(int Id);
     }
 }

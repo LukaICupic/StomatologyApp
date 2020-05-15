@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Create appointment";
-    var Id = ViewBag.customerId;
+    var Id = ViewBag.customereId;
 }
 
     <h1>Create appointment</h1>
@@ -16,9 +16,7 @@
 
 
 <div class="container">
-    <form method="post">
-
-        
+    <form method="post">     
 
         <div class="col-sm-6" style="height:auto;">
             <div class="form-group">
@@ -37,6 +35,7 @@
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
+
                 <label asp-for="@Model.AppointmentEnd">Select the ending time</label>
                 <div class='input-group date' id='datetimepicker3'>
                     <input type='text' asp-for="@Model.AppointmentEnd" class="form-control" />
@@ -48,7 +47,7 @@
 
                 <label asp-for="@Model.Title">Title</label>
                 <div>
-                    <textarea rows="2" asp-for="@Model.Title"></textarea>
+                    <textarea rows="2" class="form-control" asp-for="@Model.Title" ></textarea>
                     <span asp-validation-for="@Model.Title" class="text-danger"></span>
                 </div>
                 <br />
