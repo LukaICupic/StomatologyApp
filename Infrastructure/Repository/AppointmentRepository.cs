@@ -45,8 +45,9 @@ namespace StomatologyApp.Interfaces
 
         public void AppointmentCanceled(Appointment appointment)
         {
-            var appCanceled = context.AppointmentProcedures.FirstOrDefault(a => a.AppointmentId == appointment.AppointmentId);
-            appCanceled.ProcedureAppointmentCanceled = true;
+            var appProc = context.Appointments.FirstOrDefault(a => a.AppointmentId == appointment.AppointmentId);
+
+            appProc.AppointmentCanceled = true;
             context.SaveChanges();
 
             

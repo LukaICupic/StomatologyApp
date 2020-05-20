@@ -17,9 +17,10 @@
             <h6>@Model.AppointmentStart.Hour - @Model.AppointmentEnd.Hour h</h6>
         </div>
         <div class="card-footer">
-            <button disabled type="submit" asp-action="AppointmentCanceled" asp-route-id="@Model.AppointmentId" class="btn btn-primary">
+            <a class="btn btn-primary" asp-action="AppointmentCanceled" asp-controller="Home" asp-route-id="@Model.AppointmentId"
+                    onclick="return confirm(`Do you wish to cancel the selected appointment? It will be permanently removed from the list of appointments.`)">
                 Cancel appointment
-            </button>
+            </a>
             <button disabled type="submit" asp-action="DeleteAppointment" asp-route-id="@Model.AppointmentId" class="btn btn-secondary"
                     onclick="return confirm(`Are you sure you want to delete this appointment? If it's been canceled or the customer did not come please use` +
                     ` the 'Canceled appointment' button.`)">

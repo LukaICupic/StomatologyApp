@@ -24,6 +24,8 @@ namespace StomatologyApp.Models
         public string Title { get; set; }
         public string ProcedureDescription { get; set; } 
 
+        public bool AppointmentCanceled { get; set; }
+
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 

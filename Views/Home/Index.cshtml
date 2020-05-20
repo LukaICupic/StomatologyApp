@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Appointment>
 
-@{ 
+@{
     ViewBag.Title = "Appointments";
-} 
+}
 
 <h3>Appointments</h3>
 
@@ -10,25 +10,29 @@
 {
     foreach (var appointment in Model)
     {
-        <div class="card m-3">
-            <div class="card-header">
-                <h4>@appointment.AppointmentStart.ToShortDateString()</h4>
-            </div>
+        if (!appointment.AppointmentCanceled)
+        {
+            <div class="card m-3">
+                <div class="card-header">
+                    <h4>@appointment.AppointmentStart.ToShortDateString()</h4>
+                </div>
 
-            <div class="card-body">
-                <h5 class="card-title">@appointment.Title</h5>
-                @*<h6 class="card-subtitle">@appointment.Customer.Name</h6>*@
-            </div>
+                <div class="card-body">
+                    <h5 class="card-title">@appointment.Title</h5>
+                    @*<h6 class="card-subtitle">@appointment.Customer.Name</h6>*@
+                </div>
 
-            <div class="card-footer">
-                <a asp-action="GetAppointment" asp-route-id="@appointment.AppointmentId" class="btn btn-primary">
-                    Details
-                </a>
+                <div class="card-footer">
+                    <a asp-action="GetAppointment" asp-route-id="@appointment.AppointmentId" class="btn btn-primary">
+                        Details
+                    </a>
+                </div>
             </div>
-        </div>
+        }
     }
 }
+
 else
 {
-    <h4>There are no appointments yet created.</h4>
+<h4>There are no appointments yet created.</h4>
 }

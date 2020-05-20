@@ -159,7 +159,6 @@ namespace StomatologyApp.Controllers
                             appointment.AppointmentProcedures.Add(new AppointmentProcedure { 
                                 Appointment = appointment,
                                 DentalProcedure = _context.DentalProcedures.FirstOrDefault(d => d.DentalProcedureId == proc.DentalProcedureId),
-                                ProcedureAppointmentCanceled = false
                             });
                         }
                     }
@@ -311,7 +310,6 @@ namespace StomatologyApp.Controllers
                         {
                             Appointment = appointment,
                             DentalProcedure = _context.DentalProcedures.FirstOrDefault(d => d.DentalProcedureId == proc.DentalProcedureId),
-                            ProcedureAppointmentCanceled = false
                         });
                     }
 
@@ -327,7 +325,6 @@ namespace StomatologyApp.Controllers
                         {
                             Appointment = appointment,
                             DentalProcedure = _context.DentalProcedures.FirstOrDefault(d => d.DentalProcedureId == _proc.DentalProcedureId),
-                            ProcedureAppointmentCanceled = false
                         });
                     }
 
@@ -362,12 +359,12 @@ namespace StomatologyApp.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult AppointmentCanceled(Appointment model)
+        [HttpGet]
+        public IActionResult AppointmentCanceled (int Id)
         {
             if (ModelState.IsValid)
             {
-                var appointment = _appointment.GetAppointment(model.AppointmentId);
+                var appointment = _appointment.GetAppointment(Id);
 
                 if(appointment == null)
                 {
@@ -381,10 +378,10 @@ namespace StomatologyApp.Controllers
 
                 //ne obrisati već postaviti kao obrisano s "ProcedureCanceled" boolom u AppointmentProcedures
                 //specifično ih prikazati i označiti u GetAppointments
-                return View("GetAppointments");
+                return RedirectToAction("Index");
             }
 
-            return View(model);
+            return View();
 
             //napraviti ili da je dani appointment u "disabled" ili da se obrište potpuno.
             //(Pitanje je onda hoće li ostati u tavlici AppointmentProceduress radi izvještaja). 
