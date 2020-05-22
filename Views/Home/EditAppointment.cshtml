@@ -15,20 +15,13 @@
 
 <div class="container">
     <form method="post">
-
-
-        @*<input disabled asp-for="@Model.AppointmentId" />*@
-
         <div class="col-sm-6" style="height:auto;">
             <div class="form-group">
-                <br />
                 <div class="text-danger">
                     @ViewBag.ErrorMessage
                     <br />
-                    <br />
                     @ViewBag.Message
                 </div>
-                <br />
                 <label asp-for="@Model.AppointmentStart">Select the starting time</label>
                 <div class='input-group date' id='datetimepicker2'>
                     <input type='text' asp-for="@Model.AppointmentStart" class="form-control" />
@@ -59,47 +52,7 @@
                     <span asp-validation-for="@Model.ProcedureDescription" class="text-danger"></span>
                 </div>
                 <br />
-
-                @*@foreach (var procedure in Model.AppointmentProcedures)
-        {
-            foreach (var allProcedures in Model.DentalProcedures)
-            {
-                if (procedure.DentalProcedureId == allProcedures.DentalProcedureId)
-                {
-                    <input type="hidden" asp-for="@procedure.DentalProcedureId" />
-                    <input type="hidden" asp-for="@procedure.DentalProcedure.ProcedureName" />
-
-                    <div class=" custom-control custom-checkbox custom-control-inline">
-
-                        <input asp-for="@procedure.DentalProcedure.isEnabled" class="custom-control-input demo" checked />
-                        <label class="custom-control-label" asp-for="@procedure.DentalProcedure.isEnabled">
-                            @procedure.DentalProcedure.ProcedureName
-                        </label>
-
-                    </div>
-                }
-
-                else
-                {
-                    <input type="hidden" asp-for="@allProcedures.DentalProcedureId" />
-                    <input type="hidden" asp-for="@allProcedures.ProcedureName" />
-
-                    <div class=" custom-control custom-checkbox custom-control-inline">
-                        <input asp-for="@allProcedures.isEnabled" class="custom-control-input demo" />
-                        <label class="custom-control-label" asp-for="@allProcedures.isEnabled">
-                            @allProcedures.ProcedureName
-                        </label>
-
-                    </div>
-
-
-                }
-
-            }
-
-        }*@
-                @*@if (Model.PickedDentalProcedures.Count > 0)
-        {*@
+              
 
                 @for (var i = 0; i < Model.PickedDentalProcedures.Count(); i++)
                 {

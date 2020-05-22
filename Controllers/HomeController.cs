@@ -15,6 +15,18 @@ using StomatologyApp.ViewModels.Appointment;
 
 namespace StomatologyApp.Controllers
 {
+
+    //* dodati button kojim će stomatolog označiti da je klijent došao (zahvat odrađen)
+    //* Filtrirati iskorištene termine PO ZAHVATU  u izvještaj (sveukupni izvršeni termini i vrijeme)
+    // Filtrirati iskorištene termine PO DANIMA  u izvještaj (za svaki dan broj termina i vrijeme trajanja svih termina)
+    //* Filtrirati NEISKORIŠTENE termine PO ZAHVATU  u izvještaj (svaki nedolazak pacijeta/otkazivanje i procedure u tom terminu)
+    // Filtrirati NEISKORIŠTENO VRIJEME u izvještaj ( svaki prazan termin po danu (datum i vrijeme od kad do kad),)
+
+    //nadodati šifru zahvata svakog (prop)
+
+    //Kalendar sa tjednim i mjesečnim pregledom narudžbi (filter sa strane (dropdown ?))
+
+
     public class HomeController : Controller
     {
 
