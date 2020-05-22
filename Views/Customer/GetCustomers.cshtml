@@ -17,9 +17,9 @@
         <form asp-action="SearchForCustomer" asp-controller="Customer">
             <label for="SearchName" style="margin-left:600px">
                 Name: 
-                <input type="text" name="SearchName" id="SearchName" placeholder="Customer name">               
+                <input type="text" name="SearchName" id="SearchName" placeholder="Customer name" style="height:30px">               
             </label>
-            <input type="submit" value="Search" class="btn-sm btn-primary" />
+            <input type="submit" value="Search" class="btn btn-primary" />
         </form>
 
         foreach (var customer in Model)

@@ -17,7 +17,18 @@ namespace StomatologyApp.Interfaces
 
         public IEnumerable<Appointment> GetAppointments()
         {
-            return context.Appointments.OrderBy(a => a.AppointmentStart).ToList();
+            var appointments = context.Appointments.OrderBy(a => a.AppointmentStart);
+            var appointmentsList = new List<Appointment>();
+
+            foreach(var app in appointments)
+            {
+                if(app.AppointmentStart > DateTime.Now)
+                {
+                    appointmentsList.Add(app);
+                }
+            }
+
+            return appointmentsList;
         }
 
         public Appointment GetAppointment (int Id)

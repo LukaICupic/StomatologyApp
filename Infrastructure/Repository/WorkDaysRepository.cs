@@ -17,7 +17,18 @@ namespace StomatologyApp.Interfaces
 
         public IEnumerable<WorkDays> GetAllWorkWeeks()
         {
-            return context.WorkDays;
+            var workDays = context.WorkDays.OrderBy(w => w.WorkWeekStart);
+            var workDaysList = new List<WorkDays>();
+
+            foreach (var workDay in workDays)
+            {
+                if (workDay.WorkWeekEnd > DateTime.Now)
+                {
+                    workDaysList.Add(workDay);
+                }
+            }
+
+            return workDaysList;
         }
 
         public WorkDays GetWorkWeek (int Id)

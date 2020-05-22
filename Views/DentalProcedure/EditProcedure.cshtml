@@ -6,7 +6,7 @@
 
     <form method="post" asp-action="EditProcedure">
 
-        <input type="hidden" asp-for="DentalProcedureId"/>
+        <input type="hidden" asp-for="DentalProcedureId" />
 
         <div class="form-group-row">
             <label asp-for="ProcedureName"></label>
@@ -15,14 +15,18 @@
                 <span asp-validation-for="ProcedureName"></span>
             </div>
         </div>
+        <br />
+        <br />
 
         <div class="form-group-row">
+            <br />
             <label asp-for="ProcedurePrice"></label>
             <div>
                 <input asp-for="ProcedurePrice" placeholder="Name of procedure" class="col-sm-2 col-form-label" />
                 <span asp-validation-for="ProcedurePrice"></span>
             </div>
         </div>
+        <br />
         <br />
 
         <button type="submit" class="btn btn-primary">Save</button>

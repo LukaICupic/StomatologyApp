@@ -17,14 +17,17 @@
         </div>
     </div>
     <br />
+    <br />
 
     <div class="form-group-row">
+        <br />
         <label asp-for="ProcedurePrice">Procedure price</label>
         <div>
             <input asp-for="ProcedurePrice" placeholder="Price of the procedure" class="col-sm-2 col-form-label" />
             <span asp-validation-for="ProcedurePrice" class="text-danger"></span>
         </div>
     </div>
+    <br />
     <br />
 
 
@@ -33,6 +36,6 @@
         Create
     </button>
 
-    <a asp-action="GetCustomers" class="btn btn-secondary">Cancel</a>
+    <a asp-action="GetProcedures" class="btn btn-secondary">Cancel</a>
 
 </form>

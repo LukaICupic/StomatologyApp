@@ -9,37 +9,42 @@
 
 <form method="post" asp-action="CreateCustomer">
 
-    <div class="form-group-row">
-        <label asp-for="Name">First and last name</label>
-        <div>
-            <input asp-for="Name" placeholder="First and last name" class="col-sm-2 col-form-label" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+    <div>
+        <div class="form-group-row">
+            <label asp-for="Name">First and last name</label>
+            <div>
+                <input asp-for="Name" placeholder="First and last name" class="col-sm-2 col-form-label" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <br />
+        <br />
+        <br />
 
-    <div class="form-group-row">
-        <label asp-for="Address"></label>
-        <div>
-            <input asp-for="Address" placeholder="Address" class="col-sm-2 col-form-label" />
-            <span asp-validation-for="Address" class="text-danger"></span>
+        <div class="form-group-row">
+            <br />
+            <label asp-for="Address"></label>
+            <div>
+                <input asp-for="Address" placeholder="Address" class="col-sm-2 col-form-label" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <br />
-
-    <div class="form-group-row">
-        <label asp-for="TelephoneNumber"></label>
-        <div>
-            <input asp-for="TelephoneNumber" placeholder="Telephone number" class="col-sm-2 col-form-label" />
-            <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
+        <br />
+        <br />
+        <div class="form-group-row">
+            <br />
+            <label asp-for="TelephoneNumber"></label>
+            <div>
+                <input asp-for="TelephoneNumber" placeholder="Telephone number" class="col-sm-2 col-form-label" />
+                <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
+            </div>
         </div>
+        <br />
+        <br />
+        <button asp-action="CreateCustomer" type="submit"
+                class="btn btn-primary">
+            Add customer
+        </button>
+        <a asp-action="GetCustomers" class="btn btn-secondary">Cancel</a>
     </div>
-    <br />
-
-    <button asp-action="CreateCustomer" type="submit"
-            class="btn btn-primary">
-        Add customer
-    </button>
-    <a asp-action="GetCustomers" class="btn btn-secondary">Cancel</a>
 
 </form>
