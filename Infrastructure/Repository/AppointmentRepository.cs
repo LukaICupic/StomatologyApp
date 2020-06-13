@@ -1,6 +1,10 @@
-﻿using StomatologyApp.Models;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using StomatologyApp.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -60,7 +64,6 @@ namespace StomatologyApp.Interfaces
 
             appProc.AppointmentCanceled = true;
             context.SaveChanges();
-
             
         }
 
@@ -89,5 +92,6 @@ namespace StomatologyApp.Interfaces
 
             return app;
         }
+
     }
 }

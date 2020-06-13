@@ -21,5 +21,6 @@ namespace StomatologyApp.Interfaces
         void DeleteAppProc(int Id);
 
         Appointment DeleteAppointment(int Id);
+
     }
 }

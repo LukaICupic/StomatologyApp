@@ -16,13 +16,10 @@ using StomatologyApp.ViewModels.Appointment;
 namespace StomatologyApp.Controllers
 {
 
-    //* dodati button kojim će stomatolog označiti da je klijent došao (zahvat odrađen)
-    //* Filtrirati iskorištene termine PO ZAHVATU  u izvještaj (sveukupni izvršeni termini i vrijeme)
+    //* Filtrirati iskorištene TERMINI PO ZAHVATU  u izvještaj (sveukupni izvršeni termini i vrijeme)
     // Filtrirati iskorištene termine PO DANIMA  u izvještaj (za svaki dan broj termina i vrijeme trajanja svih termina)
     //* Filtrirati NEISKORIŠTENE termine PO ZAHVATU  u izvještaj (svaki nedolazak pacijeta/otkazivanje i procedure u tom terminu)
     // Filtrirati NEISKORIŠTENO VRIJEME u izvještaj ( svaki prazan termin po danu (datum i vrijeme od kad do kad),)
-
-    //nadodati šifru zahvata svakog (prop)
 
     //Kalendar sa tjednim i mjesečnim pregledom narudžbi (filter sa strane (dropdown ?))
 
@@ -44,6 +41,39 @@ namespace StomatologyApp.Controllers
             _workDay = workDayRepository;
             _dentalProcedure = dentalProcedure;
             _context = context;
+        }
+
+
+        [HttpGet]
+        public IActionResult FinisedAppointmentsReport()
+        {
+
+            var appointmentProcedure = _context.AppointmentProcedures.Where(a => a.Appointment.AppointmentCanceled == false).ToList();
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+
+                StreamWriter streamWriter = new StreamWriter(stream);
+
+
+                foreach (var appProc in appointmentProcedure)
+                {
+                    var appointment = _context.Appointments.FirstOrDefault(a => a.AppointmentId == appProc.AppointmentId);
+                    var procedure = _context.DentalProcedures.FirstOrDefault(p => p.DentalProcedureId == appProc.DentalProcedureId);
+
+
+                    streamWriter.Write("Title:" + " " + appointment.Title + "\r\n" +
+                        "Appointment start:" + " " + appointment.AppointmentStart + "\r\n" +
+                        "Appointment end:" + " " + appointment.AppointmentEnd + "\r\n" +
+                        "Procedure:" + " " + procedure.ProcedureName + "\r\n" + "\r\n");
+
+                }
+
+                streamWriter.Flush();
+                streamWriter.Close();
+                return File(stream.ToArray(), "text/plain", "Done_treatments.txt");
+            }
+
         }
 
         [HttpGet]

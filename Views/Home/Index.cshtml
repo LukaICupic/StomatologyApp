@@ -6,6 +6,8 @@
 
 <h3>Appointments</h3>
 
+<a asp-action="FinisedAppointmentsReport" asp-controller="Home" class="btn btn-primary">All executed procedures report</a>
+
 @if (Model.Any())
 {
     foreach (var appointment in Model)
