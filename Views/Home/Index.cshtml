@@ -6,7 +6,10 @@
 
 <h3>Appointments</h3>
 
-<a asp-action="FinisedAppointmentsReport" asp-controller="Home" class="btn btn-primary">All executed procedures report</a>
+<a asp-action="FinishedAppointmentsReport" asp-controller="Home" class="btn btn-primary">All finished procedures report</a>
+
+<a asp-action="CanceledAppointmentsReport" asp-controller="Home" class="btn btn-primary">All canceled procedures report</a>
+
 
 @if (Model.Any())
 {
@@ -35,5 +38,5 @@
 
 else
 {
-<h4>There are no appointments yet created.</h4>
+    <h4>There are no appointments yet created.</h4>
 }
