@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Logging;
 using StomatologyApp.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace StomatologyApp.Interfaces
     public class AppointmentRepository : IAppointmentRepository
     {
         private readonly AppDbContext context;
+        public ILogger<AppointmentRepository> logger;
 
         public AppointmentRepository (AppDbContext context)
         {

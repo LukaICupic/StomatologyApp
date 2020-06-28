@@ -83,45 +83,7 @@
                         </label>
 
                     </div>
-
-                    @ViewBag.ErrorMessage;
-
                 }
-                @*//}*@
-
-                @*else
-        {
-            <div class="text-danger">
-                @ViewBag.ErrorMessage
-            </div>
-            @for (var i = 0; i < Model.UnPickedDentalProcedures.Count(); i++)
-            {
-
-                <input type="hidden" asp-for="@Model.UnPickedDentalProcedures[i].DentalProcedureId" />
-                <input type="hidden" asp-for="@Model.UnPickedDentalProcedures[i].ProcedureName" />
-                <div class=" custom-control custom-checkbox custom-control-inline">
-
-                    <input asp-for="@Model.UnPickedDentalProcedures[i].isEnabled" class="custom-control-input demo" />
-                    <label class="custom-control-label" asp-for="@Model.UnPickedDentalProcedures[i].isEnabled">
-                        @Model.UnPickedDentalProcedures[i].ProcedureName
-                    </label>
-
-                </div>
-
-
-
-            }*@
-
-
-                @*}*@
-
-
-                @*else
-        {
-            @ViewBag.ErrorMessage;
-        }*@
-
-
                 <br />
                 <br />
 

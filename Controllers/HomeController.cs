@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NLog;
 using Remotion.Linq.Clauses;
 using StomatologyApp.Interfaces;
 using StomatologyApp.Models;
@@ -16,14 +19,6 @@ using StomatologyApp.ViewModels.Appointment;
 namespace StomatologyApp.Controllers
 {
 
-    //* Filtrirati iskorištene TERMINI PO ZAHVATU  u izvještaj (sveukupni izvršeni termini i vrijeme) //
-    // Filtrirati iskorištene termine PO DANIMA  u izvještaj (za svaki dan broj termina i vrijeme trajanja svih termina)
-    //* Filtrirati NEISKORIŠTENE termine PO ZAHVATU  u izvještaj (svaki nedolazak pacijeta/otkazivanje i procedure u tom terminu)
-    // Filtrirati NEISKORIŠTENO VRIJEME u izvještaj ( svaki prazan termin po danu (datum i vrijeme od kad do kad),)
-
-    //Kalendar sa tjednim i mjesečnim pregledom narudžbi (filter sa strane (dropdown ?))
-
-
     public class HomeController : Controller
     {
 
@@ -32,15 +27,17 @@ namespace StomatologyApp.Controllers
         private readonly IWorkDayRepository _workDay;
         private readonly IDentalProcedureRepository _dentalProcedure;
         private readonly AppDbContext _context;
+        private readonly ILogger<HomeController> _logger;
 
         public HomeController (IAppointmentRepository appointment, ICustomerRepository customer, IWorkDayRepository workDayRepository,
-            IDentalProcedureRepository dentalProcedure, AppDbContext context)
+            IDentalProcedureRepository dentalProcedure, AppDbContext context, ILogger<HomeController> logger)
         {
             _appointment = appointment;
             _customer = customer;
             _workDay = workDayRepository;
             _dentalProcedure = dentalProcedure;
             _context = context;
+            _logger = logger;
         }
 
 
@@ -73,21 +70,6 @@ namespace StomatologyApp.Controllers
                 streamWriter.Close();
                 return File(stream.ToArray(), "text/plain", "Done_treatments.txt");
 
-
-                //foreach(var appProc in appointmentProcedure)
-                //{
-                //    string [,] nameProc;
-                //    int countProc = 0;
-
-                //    if (!nameProc.)
-                //    {
-                //        nameProc.Append(appProc.DentalProcedure.ProcedureName);
-                //    }
-
-                //    //unijeti za svaku zapisanu proceduru ujedno i njen sveokupan broj kroz sve appointmente
-                //    // a da nije HARDKODIRANO
-
-                //}
             }
 
         }
@@ -130,7 +112,6 @@ namespace StomatologyApp.Controllers
         public ViewResult Index()
         {
             var model = _appointment.GetAppointments();
-
             return View(model);
         }
 
@@ -186,6 +167,9 @@ namespace StomatologyApp.Controllers
                 DentalProcedures = _dentalProcedure.GetProcedures().ToList()
             };
 
+            _logger.LogInformation("A new appointment is being created with the title: " + model.Title + "\r\n" +
+                                    "and the starting time at: " + model.AppointmentStart.Date);
+
             return View(model);
 
         }
@@ -196,80 +180,99 @@ namespace StomatologyApp.Controllers
 
             if (ModelState.IsValid) 
             {
-                
-
-                if (Id != 0)
+                try
                 {
-                    if( model.AppointmentStart.Date != model.AppointmentEnd.Date)
+
+                    if (Id != 0)
                     {
-                       
-                        ViewBag.ErrorMessage = ("The dates must match for the appointment to be created");
-                        ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
-                        return View(model);
-                    }
-
-                   if (model.AppointmentStart >= model.AppointmentEnd)
-                    {
-                        ViewBag.ErrorMessage = ("The starting time of the appointment was either set the same as the ending time or it was overstepped");
-                        ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
-                        return View(model);
-                    }
-
-                    var workkWeek = _workDay.GetAllWorkWeeks()
-                        .FirstOrDefault(w => w.WorkWeekStart <= model.AppointmentStart && w.WorkWeekEnd >= model.AppointmentEnd);
-
-
-                    if (workkWeek == null || model.AppointmentEnd.Hour > workkWeek.WorkWeekEnd.Hour || model.AppointmentStart.Hour < workkWeek.WorkWeekStart.Hour)
-                    {
-                        ViewBag.ErrorMessage = ("The appointment can not be created for the time of that working week was either overstepped," +
-                            " not defined or the appointment was set too early. Please check if you have created the working week.");
-                        ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
-                        return View(model);
-                    }
-
-                    var customer = _customer.GetCustomer(Id);
-                    var workWeek = _workDay.GetWorkWeek(workkWeek.WorkDaysId);
-
-                    Appointment appointment = new Appointment
-                    {
-                        AppointmentStart = model.AppointmentStart,
-                        AppointmentEnd = model.AppointmentEnd,
-                        Title = model.Title,
-                        ProcedureDescription = model.ProcedureDescription,
-                        CustomerId = Id,
-                        Customer = customer,
-                        WorkDaysId =  workkWeek.WorkDaysId,
-                        WorkDays = workWeek
-                        };
-
-                    foreach (var proc in model.DentalProcedures)
-                    {
-
-                        if (proc.isEnabled)
+                        if (model.AppointmentStart.Date != model.AppointmentEnd.Date)
                         {
 
-                            appointment.AppointmentProcedures.Add(new AppointmentProcedure { 
-                                Appointment = appointment,
-                                DentalProcedure = _context.DentalProcedures.FirstOrDefault(d => d.DentalProcedureId == proc.DentalProcedureId),
-                            });
+                            ViewBag.ErrorMessage = ("The dates must match for the appointment to be created");
+                            ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
+                            _logger.LogError("The dates must match for the appointment to be created");
+
+                            return View(model);
                         }
+
+                        if (model.AppointmentStart >= model.AppointmentEnd)
+                        {
+                            ViewBag.ErrorMessage = ("The starting time of the appointment was either set the same as the ending time or it was overstepped");
+                            ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
+                            _logger.LogError("The starting time of the appointment was either set the same as the ending time or it was overstepped");
+                            return View(model);
+                        }
+
+                        var workkWeek = _workDay.GetAllWorkWeeks()
+                            .FirstOrDefault(w => w.WorkWeekStart <= model.AppointmentStart && w.WorkWeekEnd >= model.AppointmentEnd);
+
+
+                        if (workkWeek == null || model.AppointmentEnd.Hour > workkWeek.WorkWeekEnd.Hour || model.AppointmentStart.Hour < workkWeek.WorkWeekStart.Hour)
+                        {
+                            ViewBag.ErrorMessage = ("The appointment can not be created for the time of that working week was either overstepped," +
+                                " not defined or the appointment was set too early. Please check if you have created the working week.");
+                            ViewBag.Message = ("You have inserted the following dates and time: " + model.AppointmentStart + " - " + model.AppointmentEnd);
+                            _logger.LogError("The appointment can not be created for the time of that working week was either overstepped," +
+                                " not defined or the appointment was set too early.");
+                            return View(model);
+                        }
+
+                        var customer = _customer.GetCustomer(Id);
+                        var workWeek = _workDay.GetWorkWeek(workkWeek.WorkDaysId);
+
+                        Appointment appointment = new Appointment
+                        {
+                            AppointmentStart = model.AppointmentStart,
+                            AppointmentEnd = model.AppointmentEnd,
+                            Title = model.Title,
+                            ProcedureDescription = model.ProcedureDescription,
+                            CustomerId = Id,
+                            Customer = customer,
+                            WorkDaysId = workkWeek.WorkDaysId,
+                            WorkDays = workWeek
+                        };
+
+
+
+                        foreach (var proc in model.DentalProcedures)
+                        {
+
+                            if (proc.isEnabled)
+                            {
+
+                                appointment.AppointmentProcedures.Add(new AppointmentProcedure
+                                {
+                                    Appointment = appointment,
+                                    DentalProcedure = _context.DentalProcedures.FirstOrDefault(d => d.DentalProcedureId == proc.DentalProcedureId),
+                                });
+                            }
+                        }
+
+                        if (appointment.AppointmentProcedures.Count == 0)
+                        {
+                            ViewBag.ErrorMessage = ("You need to pick at least one procedure if you wish to save the appointment.");
+                            return View(model);
+                        }
+
+
+                        _appointment.CreateAppointment(appointment);
+                        _logger.LogWarning($"Appoitnemnt {appointment.Title} was successfully created");
+                        return RedirectToAction("Index");
                     }
 
-                    if (appointment.AppointmentProcedures.Count == 0)
+                    else
                     {
-                        ViewBag.ErrorMessage = ("You need to pick at least one procedure if you wish to save the appointment.");
-                        return View(model);
+                        ViewBag.ErrorMessage = "User could not be found, so the appointment could not be created";
+                        _logger.LogError($"Appointment could not be created because the user could not be found");
+                        return View("NotFound");
                     }
-
-
-                    _appointment.CreateAppointment(appointment);
-                    return RedirectToAction("Index");
                 }
 
-                else
+                catch (Exception ex)
                 {
-                    ViewBag.ErrorMessage = "User could not be found, so the appointment could not be created";
-                    return View("NotFound");
+                    _logger.LogError($"Exception message: {ex.Message}" + "\r\n" + "\r\n" +
+                        $"Inner exception: {ex.InnerException}");
+                    return View(model);
                 }
             }
 
@@ -324,7 +327,7 @@ namespace StomatologyApp.Controllers
                     model.UnPickedDentalProcedures.Add(appProc);
                 }
 
-            }
+            }     
 
 
             model.AppointmentStart = appointment.AppointmentStart;
@@ -422,29 +425,16 @@ namespace StomatologyApp.Controllers
 
                 }
 
-                //if(appointment.AppointmentProcedures.Count == 0)
-                //{
-                //    if (model.PickedDentalProcedures.Count > 0)
-                //    {
-                //        foreach (var appProc in model.PickedDentalProcedures)
-                //        {
-                //            appProc.isEnabled = false;
-                //            model.UnPickedDentalProcedures.Add(appProc);
-                //            model.PickedDentalProcedures.Remove(appProc);
-                //            break;
-                //        }
-                //    }
+                if (appointment.AppointmentProcedures.Count == 0)
+                {
+                    ViewBag.ErrorMessage = "At least one procedure must be picked!";
+                    _logger.LogWarning($"Not a single procedure has been picked in the {model.Title} appointment");
+                    return View(model);
 
-                //    ViewBag.ErrorMessage = ("You need to pick at least one procedure if you wish to save the appointment.");
-                //    return View(model);
-                //}
+                }
 
                 _appointment.UpdateAppointment(appointment);
                 return RedirectToAction("Index");
-
-
-
-
 
             }
 
