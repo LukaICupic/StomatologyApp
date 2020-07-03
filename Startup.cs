@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,16 @@ namespace StomatologyApp
             services.AddDbContextPool<AppDbContext>(
                 options => options.UseSqlServer(_config.GetConnectionString("SSMSConnectionString")));
 
+            services.AddIdentity<IdentityUser, IdentityRole>(o => {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            })
+                .AddEntityFrameworkStores<AppDbContext>();
+
+
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IDentalProcedureRepository, DentalProcedureRepo>();
             services.AddScoped<IWorkDayRepository, WorkDaysRepository>();
@@ -46,7 +57,7 @@ namespace StomatologyApp
             }
 
             app.UseStaticFiles();
-
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
