@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StomatologyApp.Interfaces;
 using StomatologyApp.Models;
@@ -9,6 +10,7 @@ using StomatologyApp.ViewModels.DentalProcedure;
 
 namespace StomatologyApp.Controllers
 {
+    [Authorize]
     public class DentalProcedureController : Controller
     {
         private readonly IDentalProcedureRepository _dentalProcedure;
@@ -19,6 +21,7 @@ namespace StomatologyApp.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult GetProcedures()
         {
             var procedures = _dentalProcedure.GetProcedures();
@@ -27,6 +30,7 @@ namespace StomatologyApp.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult GetProcedure (int Id)
         {
             var procedure = _dentalProcedure.GetProcedure(Id);

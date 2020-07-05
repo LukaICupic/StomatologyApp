@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StomatologyApp.Models.AccountVM;
 using StomatologyApp.Models.RegisterVM;
 
 namespace StomatologyApp.Controllers
 {
+
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
-
+        //private readonly RoleManager<IdentityUser> roleManager;
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -20,7 +23,7 @@ namespace StomatologyApp.Controllers
             this.signInManager = signInManager;
         }
 
-        public SignInManager<IdentityUser> SignInManager { get; }
+
 
         [HttpGet]
         public IActionResult Register()

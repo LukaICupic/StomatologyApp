@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StomatologyApp.Interfaces;
 using StomatologyApp.Models;
@@ -10,6 +11,7 @@ using StomatologyApp.ViewModels.WorkDays;
 
 namespace StomatologyApp.Controllers
 {
+    [Authorize]
     public class WorkDayController : Controller
     {
         private readonly IWorkDayRepository _workDay;
@@ -20,6 +22,7 @@ namespace StomatologyApp.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult GetAllWorkWeeks()
         {
             var workWeek = _workDay.GetAllWorkWeeks();
@@ -28,6 +31,7 @@ namespace StomatologyApp.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult GetWorkWeek(int Id)
         {
             var workWeek = _workDay.GetWorkWeek(Id);

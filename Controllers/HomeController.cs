@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ using StomatologyApp.ViewModels.Appointment;
 
 namespace StomatologyApp.Controllers
 {
-
+    [Authorize]
     public class HomeController : Controller
     {
 
