@@ -186,6 +186,20 @@ namespace StomatologyApp.Controllers
 
                     if (Id != 0)
                     {
+                        var date = DateTime.Now;
+
+
+                        if(model.AppointmentStart.Date < date)
+                        {
+                            ViewBag.ErrorMessage = ("You are trying to create an appointment before todays date or time.");
+                            ViewBag.Message = ("You have inserted the following date and time: " + model.AppointmentStart);
+                            _logger.LogError("You are trying to create an appointment before todays date or time.");
+
+                            return View(model);
+
+                            
+                        }
+
                         if (model.AppointmentStart.Date != model.AppointmentEnd.Date)
                         {
 

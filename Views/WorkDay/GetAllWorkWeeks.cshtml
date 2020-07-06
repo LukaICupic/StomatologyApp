@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<WorkDays>
+@inject SignInManager<IdentityUser> signInManager
 
 @{
     ViewBag.Title = "Working weeks";
@@ -19,7 +20,7 @@
 
         <form method="post" asp-action="DeleteWorkWeek" asp-route-id="@workweek.WorkDaysId">
             <div class="card m-3 text-center">
-                <div class="card-header">                   
+                <div class="card-header">
                     <h4 class="card-title">@workweek.WorkWeekStart.ToShortDateString() - @workweek.WorkWeekEnd.ToShortDateString()</h4>
                     <h5 class="card-subtitle mb-2 text-muted">@workweek.WorkWeekStart.Hour - @workweek.WorkWeekEnd.Hour</h5>
                 </div>
@@ -27,19 +28,20 @@
                 <div class="card-body">
                     <h5>**Info about appointments </h5>
                 </div>
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <div class="card-footer">
+                        <a asp-action="EditWorkWeek" asp-route-id="@workweek.WorkDaysId" class="btn btn-primary">
+                            Modify
+                        </a>
 
-                <div class="card-footer">
-                    <a asp-action="EditWorkWeek" asp-route-id="@workweek.WorkDaysId" class="btn btn-primary">
-                        Modify
-                    </a>
-
-                    <button type="submit" class="btn btn-secondary" onClick="return confirm('You can always modify the work week. Are you sure you want to delete it? ')">
-                        Delete
+                        <button type="submit" class="btn btn-secondary" onClick="return confirm('You can always modify the work week. Are you sure you want to delete it? ')">
+                            Delete
                         </button>
-                    
-                </div>
+                    </div>
+                }
 
-            </div>
+                </div>
         </form>
     }
 }

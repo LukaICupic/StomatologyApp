@@ -1,12 +1,14 @@
 ﻿@model DentalProcedure
+@inject SignInManager<IdentityUser> signInManager
+
+@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <div class="card m-3">
+        <div class="card-header">
+            <h3>@Model.ProcedureName</h3>
+        </div>
 
 
-<div class="card m-3">
-    <div class="card-header">
-        <h3>@Model.ProcedureName</h3>
-    </div>
-
-  
         <div class="card-body">
             <ul>
                 <li>@Model.ProcedurePrice</li>
@@ -15,9 +17,10 @@
         </div>
 
 
-    <div class="card-footer">
-        <a asp-action="GetProcedures" class="btn btn-primary">Back</a>
+        <div class="card-footer">
+            <a asp-action="GetProcedures" class="btn btn-primary">Back</a>
+        </div>
     </div>
-</div>
+}
 
 

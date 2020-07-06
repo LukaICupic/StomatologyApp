@@ -4,20 +4,16 @@
     ViewBag.Title = "Customer list";
 }
 
-<br />
-
 
 <div class="container">
-    <div>
         <a asp-action="CreateCustomer" class="btn btn-primary ">Create new customer</a>
-    </div>
+  
 
     @if (Model.Any())
     {
         <form asp-action="SearchForCustomer" asp-controller="Customer">
             <label for="SearchName" style="margin-left:600px">
-                Name: 
-                <input type="text" name="SearchName" id="SearchName" placeholder="Customer name" style="height:30px">               
+                <input type="text" name="SearchName" id="SearchName" placeholder="Customer name" style="height:30px;">
             </label>
             <input type="submit" value="Search" class="btn btn-primary" />
         </form>

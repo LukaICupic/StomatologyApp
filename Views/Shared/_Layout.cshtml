@@ -35,20 +35,33 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-item nav-link" asp-action="Index" asp-controller="Home">Appointments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link" asp-action="GetCustomers" asp-controller="Customer">Customers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link" asp-action="GetProcedures" asp-controller="DentalProcedure">Dental procedures</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link" asp-action="GetAllWorkWeeks" asp-controller="WorkDay">Work schedules</a>
+                        </li>
+                    </ul>
+                }
+                else {
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-item nav-link active" asp-action="GetCustomers" asp-controller="Customer">Customers</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-item nav-link" asp-action="GetProcedures" asp-controller="DentalProcedure">Dental procedures</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-item nav-link" asp-action="Index" asp-controller="Home">Appointments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-item nav-link" asp-action="GetAllWorkWeeks" asp-controller="WorkDay">Work schedules</a>
                     </li>
                 </ul>
+                }
 
                 <ul class="navbar-nav w-25">
                     @if (signInManager.IsSignedIn(User))
@@ -65,7 +78,7 @@
                     {
                         <li class="nav-item ml-auto">
                             @*//udesno*@
-                            <a class="nav-item nav-link" asp-action="Register" asp-controller="Account">Register</a>
+                            @*<a class="nav-item nav-link" asp-action="Register" asp-controller="Account">Register</a>*@
                         </li>
                         <li class="nav-item ml-auto">
                             <a class="nav-item nav-link" asp-action="Login" asp-controller="Account">Login</a>
