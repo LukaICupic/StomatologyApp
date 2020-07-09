@@ -7,7 +7,7 @@
 <h3>Create customer</h3>
 <br />
 
-<form method="post" asp-action="CreateCustomer">
+<form enctype="multipart/form-data" method="post" asp-action="CreateCustomer">
 
     <div>
         <div class="form-group-row">
@@ -40,11 +40,32 @@
         </div>
         <br />
         <br />
+        <div class="form-group-row">
+            <br />
+            <label asp-for="Photo"></label>
+            <div>
+                <div class="custom-file">
+                    <input asp-for="Photo" class="form-control custom-file-input" />
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
         <button asp-action="CreateCustomer" type="submit"
                 class="btn btn-primary">
             Add customer
         </button>
         <a asp-action="GetCustomers" class="btn btn-secondary">Cancel</a>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var filename = $(this).val().split("\\").pop();
+                $(this).next('custom-file-label').html(fileName);
+            });
+        });
+    </script>
 
 </form>

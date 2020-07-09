@@ -8,8 +8,6 @@ namespace StomatologyApp.ViewModels.Customer
 {
     public class CustomerEditVM
     {
-       
-        
         public int CustomerId { get; set; }
         [Required(ErrorMessage = "Name is a required field")]
         public string Name { get; set; }
@@ -17,8 +15,6 @@ namespace StomatologyApp.ViewModels.Customer
         public string Address { get; set; } 
         [Required(ErrorMessage = "Telephone number is a required field")]
         public string TelephoneNumber { get; set; }
-
-
         
     }
 }

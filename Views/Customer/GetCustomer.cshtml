@@ -1,37 +1,44 @@
 ﻿@model Customer
 @{
     ViewBag.Title = "Customer details";
+    var photoPath = "~/images/" + (Model.PhotoPath ?? "noimage.jpg");
 }
 
-    <div class="card m-3">
-        <div class="card-header">
-            <h3>@Model.Name</h3>
-        </div>
+    <div class="row justify-content-center m-3">
+        <div class="col-sm-8">
+            <div class="card m-3">
+                <div class="card-header">
+                    <h3>@Model.Name</h3>
+                </div>
 
-        @if (Model.Address == null)
-        {
-            <div class="card-body">
-                <ul>
-                    <li>The address was not specified.</li>
-                    <li>@Model.TelephoneNumber</li>
+                @if (Model.Address == null)
+                {
+                    <div class="card-body text-center">
+                        <img class="card-img-top imgThumbnail" src="@photoPath" asp-append-version="true"/>
+                        <ul>
+                            <li>The address was not specified.</li>
+                            <li>@Model.TelephoneNumber</li>
 
-                </ul>
+                        </ul>
+                    </div>
+                }
+
+                else
+                {
+                    <div class="card-body text-center">
+                        <img class="card-img-top imgThumbnail" src="@photoPath" asp-append-version="true" />
+                        <ul>
+                            <li>@Model.Address</li>
+                            <li>@Model.TelephoneNumber</li>
+
+                        </ul>
+                    </div>
+                }
+
+                <div class="card-footer">
+                    <a asp-action="GetCustomers" class="btn btn-primary">Back</a>
+                </div>
             </div>
-        }
-
-        else
-        {
-            <div class="card-body">
-                <ul>
-                    <li>@Model.Address</li>
-                    <li>@Model.TelephoneNumber</li>
-
-                </ul>
-            </div>
-        }
-
-        <div class="card-footer">
-            <a asp-action="GetCustomers" class="btn btn-primary">Back</a>
         </div>
     </div>
 

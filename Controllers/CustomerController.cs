@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NLog.Targets;
 using StomatologyApp.Models;
 using StomatologyApp.ViewModels.Customer;
 
@@ -13,10 +17,12 @@ namespace StomatologyApp.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public CustomerController(ICustomerRepository customerRepository)
+        public CustomerController(ICustomerRepository customerRepository, IHostingEnvironment hostingEnvironment)
         {
             _customerRepository = customerRepository;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         public ViewResult GetCustomers()
@@ -114,12 +120,24 @@ namespace StomatologyApp.Controllers
         public IActionResult CreateCustomer (CustomerCreateVM customer)
         {
             if (ModelState.IsValid)
-            {             
+            {
+                string uniqueFileName = null;
+
+                if(customer.Photo != null)
+                {
+                    string folder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + customer.Photo.FileName;
+                    string pathFile = Path.Combine(folder, uniqueFileName);
+
+                    customer.Photo.CopyTo(new FileStream(pathFile, FileMode.Create));
+                }
+
                 Customer _customer = new Customer
                 {
                     Name = customer.Name,
                     Address = customer.Address,
                     TelephoneNumber = customer.TelephoneNumber,
+                    PhotoPath = uniqueFileName
                 };
 
                 _customerRepository.AddCustomer(_customer);

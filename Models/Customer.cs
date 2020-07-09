@@ -21,6 +21,6 @@ namespace StomatologyApp.Models
         public List<Appointment> Appointments { get; set; }
         public List<CustomerProcedure> CustomerProcedures { get; set; }
 
-
+        public string PhotoPath { get; set; }
     }
 }
